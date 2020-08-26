@@ -1,0 +1,42 @@
+
+	<section class="emp-login-form">
+		<div id="form-section">
+			<div class="wrapp  pull-center">
+
+				<!-- logo -->
+				<div class="logo ">
+                    <img class="brand-logo" src="../../assets/images/logo.png" alt="">
+					<!-- <a class="brand-logo" href="index.html">Welcome Admin</a> -->
+				</div>
+				<!-- //logo -->
+
+				<!-- form -->
+				<div class="login-form ">
+
+					<form  [formGroup]="myform" (ngSubmit)="login()">
+                
+                            <div class="col-md-6 col-md-12">
+                            <input type="text" formControlName="email" placeholder="Email" required="required" />
+                            <div *ngFor="let validation of account_validation_messages.email">
+                                <div class="error-message" *ngIf="myform.get('email').hasError(validation.type) && (myform.get('email').dirty || myform.get('email').touched)">{{validation.message}}</div>
+                            </div>
+                            </div>
+                            
+                             <div class=" col-md-6 col-md-12">
+                            <input type="password" formControlName="password" placeholder="Password" required="required" />
+                            <div *ngFor="let validation of account_validation_messages.password">
+                                <div class="error-message" *ngIf="myform.get('password').hasError(validation.type) && (myform.get('password').dirty || myform.get('password').touched)">{{validation.message}}</div>
+                            </div>
+                            </div>
+                        
+                        <button type="submit">Login</button>
+                    
+                    </form>
+                
+                </div>
+                
+
+			</div>
+		</div>
+	</section>
+	
