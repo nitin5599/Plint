@@ -26,11 +26,11 @@ export class UsercrudService {
     return this.db.collection('users').snapshotChanges();
   }
 
-  updateUser(value){
-    return this.db.collection("users").doc(value.payload.doc.id).set({ completed: true }, { merge: true });
-
-    // value.nameToSearch = value.name.toLowerCase();
-    // return this.db.collection('users').doc(userKey).set(value);
-  }
+//   updateUser(value){
+//     return this.db.collection("users").doc(value.payload.doc.id).set({ completed: true }, { merge: true });
+//  }
 
 }
+
+
+ 

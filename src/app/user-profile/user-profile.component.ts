@@ -73,16 +73,16 @@ showupdate() {
 
   }
 
-  edituser(userid)
-  {
-    this.userservice.updateUser(userid)
-    .then(
-      res => {
-        this.showupdate();
-        this.router.navigate(['/user-profile']);
-      }
-    )
-  }
+  // edituser(userid)
+  // {
+  //   this.userservice.updateUser(userid)
+  //   .then(
+  //     res => {
+  //       this.showupdate();
+  //       this.router.navigate(['/user-profile']);
+  //     }
+  //   )
+  // }
 
   reset()
   {

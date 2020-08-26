@@ -12,11 +12,8 @@ import { ComponentsModule } from './components/components.module';
 import { AdminLayoutModule } from '../app/layouts/admin-layout/admin-layout.module';
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 // import { AgmCoreModule} from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { EmployeeComponent } from './employee/employee.component';
-import { CompanyComponent } from './company/company.component';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
