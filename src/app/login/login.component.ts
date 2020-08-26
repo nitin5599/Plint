@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from  '@angular/forms';
 import { Router } from  '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
 
     }
 
-  constructor(private router: Router, private fb: FormBuilder ) { }
+  constructor(private router: Router,private toastr: ToastrService, private fb: FormBuilder ) { }
 
   ngOnInit(): void {
 
@@ -51,12 +52,15 @@ export class LoginComponent implements OnInit {
     this.isSubmitted = true;
     if((this.myform.get('email').value == 'admin@gmail.com') && (this.myform.get('password').value == 'admin123'))
     {
-      alert('welcome admin');
+      // alert('welcome admin');
       this.router.navigate(['user-profile']);
     }
     else 
     {
-      alert('something went wrong try again');
+      this.toastr.error('Error', 'Try again', {
+        timeOut: 3000,
+      });
+      // alert('something went wrong try again');
     }
     
   }

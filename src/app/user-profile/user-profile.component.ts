@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl,FormBuilder,FormGroup,Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsercrudService } from '../services/usercrud.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,7 +20,7 @@ export class UserProfileComponent implements OnInit {
  
   items: Array<any>;
 
-  constructor(public userservice: UsercrudService, public router: Router, public fb: FormBuilder) { }
+  constructor(public userservice: UsercrudService,private toastr: ToastrService, public router: Router, public fb: FormBuilder) { }
 
   ngOnInit() {
     this.userform = this.fb.group({
@@ -40,6 +41,9 @@ export class UserProfileComponent implements OnInit {
 
 }
 
+showSubmit() {
+  this.toastr.success('submitted successfully!');
+}
   onSubmit(value){
     if(this.userform.valid)
     {
@@ -47,15 +51,19 @@ export class UserProfileComponent implements OnInit {
       this.userservice.createUser(value)
     .then(
       res => {
-        window.alert('user submitted!');
-        this.router.navigate(['/user-profile']);
+        
+        this.showSubmit();
+        // this.router.navigate(['/user-profile']);
         this.reset();
       }
     )
   }
   else 
   { 
-    alert('Something went wrong try again!');
+    this.toastr.error('Error', 'Try again', {
+      timeOut: 3000,
+    });
+    // alert('Something went wrong try again!');
   }
 
   }
