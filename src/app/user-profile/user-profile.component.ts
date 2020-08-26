@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   userform: FormGroup;
  
   items: Array<any>;
+  item: any;
 
   constructor(public userservice: UsercrudService,private toastr: ToastrService, public router: Router, public fb: FormBuilder) { }
 
@@ -44,6 +45,10 @@ export class UserProfileComponent implements OnInit {
 showSubmit() {
   this.toastr.success('submitted successfully!');
 }
+
+showupdate() {
+  this.toastr.success('updated successfully!');
+}
   onSubmit(value){
     if(this.userform.valid)
     {
@@ -66,6 +71,17 @@ showSubmit() {
     // alert('Something went wrong try again!');
   }
 
+  }
+
+  edituser(userid)
+  {
+    this.userservice.updateUser(userid)
+    .then(
+      res => {
+        this.showupdate();
+        this.router.navigate(['/user-profile']);
+      }
+    )
   }
 
   reset()
