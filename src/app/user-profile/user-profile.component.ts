@@ -1,8 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl,FormBuilder,FormGroup,Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UsercrudService } from '../services/usercrud.service';
 import { ToastrService } from 'ngx-toastr';
+
+export interface User {
+  employee_code: number;
+  name: String;
+  email: String;
+  role: String;
+  is_expense_manager_user: boolean;
+}
+
+
 
 @Component({
   selector: 'app-user-profile',
@@ -10,20 +21,26 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./user-profile.component.css']
 })
 
+
 export class UserProfileComponent implements OnInit {
 
-  role: any[] = ['Admin', 'Senior_sales_manager', 'Regional_manager'];
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+  role: any[] = ['admin', 'senior_sales_manager', 'regional_manager'];
   
-  expmanager: any[] = ['Yes', 'No'];
+  is_expense_manager_user: boolean;
   
   userform: FormGroup;
  
   items: Array<any>;
-  item: any;
 
-  constructor(public userservice: UsercrudService,private toastr: ToastrService, public router: Router, public fb: FormBuilder) { }
+  user: User[];
+  
+
+  constructor(public userservice: UsercrudService,private toastr: ToastrService,private http: HttpClient, public router: Router, public fb: FormBuilder) { }
 
   ngOnInit() {
+
     this.userform = this.fb.group({
       email: ['', Validators.compose([
         Validators.required,
@@ -31,16 +48,14 @@ export class UserProfileComponent implements OnInit {
       ])],
       name: ['', Validators.required],
       role: ['', Validators.required],
-      expmanager: ['', Validators.required],
-      empcode: ['', Validators.required],
+      is_expense_manager_user: [ Validators.required],
+      employee_code: ['', Validators.required],
   });
 
-  this.userservice.getUsers()
-  .subscribe(result => {
-    this.items = result;
-  })
+  this.getData(); 
 
 }
+
 
 showSubmit() {
   this.toastr.success('submitted successfully!');
@@ -49,49 +64,51 @@ showSubmit() {
 showupdate() {
   this.toastr.success('updated successfully!');
 }
-  onSubmit(value){
+
+  onSubmit()
+  {
     if(this.userform.valid)
-    {
-      console.log(this.userform.value);
-      this.userservice.createUser(value)
-    .then(
-      res => {
-        
-        this.showSubmit();
-        // this.router.navigate(['/user-profile']);
-        this.reset();
+    {     
+      var user = {
+        employee_code: this.userform.value.employee_code,
+        name: this.userform.value.name,
+        email: this.userform.value.email,
+        role: this.userform.value.role,
+        is_expense_manager_user: this.userform.value.is_expense_manager_user
+        }
+        // console.log(JSON.stringify(user));
+        this.http.post('http://15.207.181.67:3000/auth/users', user, {headers: this.headers}).subscribe(data => {
+          console.log(data);
+      });
+
+      this.showSubmit();
+      this.getData();
+    }
+    else 
+      { 
+       this.toastr.error('Error', 'Try again', {
+       timeOut: 3000,
+       });
       }
-    )
-  }
-  else 
-  { 
-    this.toastr.error('Error', 'Try again', {
-      timeOut: 3000,
-    });
-    // alert('Something went wrong try again!');
-  }
 
   }
 
-  // edituser(userid)
-  // {
-  //   this.userservice.updateUser(userid)
-  //   .then(
-  //     res => {
-  //       this.showupdate();
-  //       this.router.navigate(['/user-profile']);
-  //     }
-  //   )
-  // }
+  getData(){
+
+    this.http.get<any>('http://15.207.181.67:3000/common/users').subscribe(res => {
+      this.items = res.data;
+    })
+  
+  }
 
   reset()
   {
   this.userform = this.fb.group({
-    empcode: "",
+    employee_code: "",
     name: "",
     email: "",
     role: "",
-    expmanager: "",    
+    is_expense_manager_user: "",    
   });
   }
 

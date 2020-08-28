@@ -13,23 +13,23 @@
 				<!-- form -->
 				<div class="login-form ">
 
-					<form  [formGroup]="myform" (ngSubmit)="login()">
+					<form  [formGroup]="myform" (ngSubmit)="onSubmit()">
                 
-                            <div class="col-md-6 col-md-12">
+                            <div class="col-md-6 col-md-12 form-group">
                             <input type="text" formControlName="email" placeholder="Email" required="required" />
                             <div *ngFor="let validation of account_validation_messages.email">
                                 <div class="error-message" *ngIf="myform.get('email').hasError(validation.type) && (myform.get('email').dirty || myform.get('email').touched)">{{validation.message}}</div>
                             </div>
                             </div>
                             
-                             <div class=" col-md-6 col-md-12">
+                             <div class=" col-md-6 col-md-12 form-group">
                             <input type="password" formControlName="password" placeholder="Password" required="required" />
                             <div *ngFor="let validation of account_validation_messages.password">
                                 <div class="error-message" *ngIf="myform.get('password').hasError(validation.type) && (myform.get('password').dirty || myform.get('password').touched)">{{validation.message}}</div>
                             </div>
                             </div>
                         
-                        <button type="submit">Login</button>
+                        <button type="submit" >Login</button>
                     
                     </form>
                 

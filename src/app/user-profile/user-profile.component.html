@@ -1,27 +1,29 @@
-
+<!-- <app-admin-layout></app-admin-layout> -->
 <div class="main-content">
   <div class="container-fluid">
       <div class="row">
           <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header card-header">
-                      <h4 class="card-title">User Profile</h4>
-                      <p class="card-category">Complete your profile</p>
+              <div class="card  ">
+                  <div class="card-header rounded mdc-elevation--z6 card-header">
+                      <h4 class="card-title">Add User</h4>
+                      <p class="card-category">Add new User</p>
                   </div>
-                  <div class="card-body">
-                      <form [formGroup]="userform" novalidate (ngSubmit)="onSubmit(userform.value)">
-                          <div class="row">
-                            <div class="col-md-4 form-group">
+                  <div class="card-body rounded mdc-elevation--z6">
+                      <form [formGroup]="userform" novalidate (ngSubmit)="onSubmit()">
+
+                           <div class="col-md-4 form-group">
                               <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Employee Code" type="text" formControlName="empcode">
+                                <input matInput placeholder="Employee Code" type="text" formControlName="employee_code">
                               </mat-form-field>
                             </div>
+
                             <div class="col-md-4 form-group">
                                 <mat-form-field class="example-full-width">
                                   <input matInput placeholder="Full Name" type="text" formControlName="name">
                                 </mat-form-field>
-                              </div>
-                              <div class="col-md-4 form-group">
+                            </div>
+                            
+                            <div class="col-md-4 form-group">
                                 <mat-form-field appearance="fill">
                                   <mat-label>Role</mat-label>
                                   <mat-select formControlName="role" >
@@ -30,28 +32,29 @@
                                     </mat-option>
                                   </mat-select>
                                 </mat-form-field>
-                          </div>
-                          <div class="row">
-                              </div>
-                              <div class="col-md-6 form-group">
+                           </div>
+
+                          
+                           <div class="col-md-4 form-group">
                                 <mat-form-field class="example-full-width">
                                   <input matInput placeholder="Email" formControlName="email" type="text">
                                 </mat-form-field>
-                              </div>
-                              <div class="col-md-4 form-group">
+                            </div>
+                          
+                            <div class="col-md-4 form-group">
                                 <mat-form-field appearance="fill">
                                   <mat-label>Expense Manager</mat-label>
-                                  <mat-select formControlName="expmanager" >
-                                    <mat-option *ngFor="let exp of expmanager" [value]="exp">
-                                      {{exp}}
-                                    </mat-option>
+                                  <mat-select formControlName="is_expense_manager_user" >
+                                    <mat-option [value]=true>True</mat-option>
+                                    <mat-option [value]=false>False</mat-option>
                                   </mat-select>
                                 </mat-form-field>
-                              </div>
-                          </div>
+                            </div>
                           
-                          <button mat-raised-button type="submit"  class="btn btn-Success pull-left">Submit Profile</button>
-                          
+                            <div class="col-md-4 mt-3">
+                              <button mat-raised-button type="submit"  class="btn btn-Success pull-left">Submit Profile</button>
+                            </div>
+
                           <div class="clearfix"></div>
                       
                       </form>
@@ -63,11 +66,11 @@
         <div class="row mt-5">
           <div class="col-md-12">
             <div class="card">
-              <div  class="card-header card-header">
+              <div  class="card-header rounded mdc-elevation--z6 card-header">
                   <h4 class="card-title ">Users</h4>
                   <p class="card-category ">About users info</p>
               </div>
-              <div class="card-body">
+              <div class="card-body rounded mdc-elevation--z6">
                   <div  class="table-responsive">
                       <table class="table">
                           <thead class=" text-black">
@@ -76,19 +79,17 @@
                               <th>Email</th>
                               <th>Role</th>
                               <th>ExpenseManager</th>
-                              <!-- <th>Status</th> -->
                               <th>Update</th>
                               <th>Delete</th>
                           </thead>
                           <tbody>
-                              <tr *ngFor="let item of items">
-                                  <td>{{item.payload.doc.data().empcode}}</td>
-                                  <td>{{item.payload.doc.data().name}}</td>
-                                  <td>{{item.payload.doc.data().email}}</td>
-                                  <td>{{item.payload.doc.data().role}}</td>
-                                  <td>{{item.payload.doc.data().expmanager}}</td>
-                                  <!-- <td>Active</td> -->
-                                  <td><button mat-raised-button type="submit" style="background-color: #1b96f3;" (click)="edituser()"  class="btn btn-Success pull-left">Edit</button></td>
+                              <tr *ngFor="let data of items">
+                                  <td>{{data.employee_code}}</td>
+                                  <td>{{data.name}}</td>
+                                  <td>{{data.email}}</td>
+                                  <td>{{data.role}}</td>
+                                  <td>{{data.is_expense_manager_user}}</td>
+                                  <td><button mat-raised-button type="submit" style="background-color: #1b96f3;" (click)="edituser(data._id)"  class="btn btn-Success pull-left">Edit</button></td>
                                   <td><button mat-raised-button type="submit"  class="btn btn-danger pull-left">Delete</button></td>
                               </tr>
                           </tbody>
