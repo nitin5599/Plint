@@ -14,7 +14,6 @@ export interface User {
 }
 
 
-
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -65,6 +64,10 @@ showupdate() {
   this.toastr.success('updated successfully!');
 }
 
+showDelete() {
+  this.toastr.success('Deleted successfully!');
+}
+
   onSubmit()
   {
     if(this.userform.valid)
@@ -77,12 +80,13 @@ showupdate() {
         is_expense_manager_user: this.userform.value.is_expense_manager_user
         }
         // console.log(JSON.stringify(user));
-        this.http.post('http://15.207.181.67:3000/auth/users', user, {headers: this.headers}).subscribe(data => {
-          console.log(data);
-      });
+        this.userservice.createUser(user).subscribe(data => {
+          // console.log(data);
+          this.showSubmit();
+          this.getData();
+          this.reset();
+        });
 
-      this.showSubmit();
-      this.getData();
     }
     else 
       { 
@@ -93,12 +97,23 @@ showupdate() {
 
   }
 
-  getData(){
+  deluser(_id: String)
+  {
+    this.userservice.deleteUser(_id)
+    .subscribe((val) => {
+      console.log(val)
+      this.showDelete();
+      this.getData();
+    });
 
-    this.http.get<any>('http://15.207.181.67:3000/common/users').subscribe(res => {
+    
+  }
+
+  getData(){
+    this.http.get<any>('http://15.207.181.67:3000/admin/users?nonAdminUsers=false').subscribe(res => {
       this.items = res.data;
-    })
-  
+      // console.log(this.items);
+    });  
   }
 
   reset()

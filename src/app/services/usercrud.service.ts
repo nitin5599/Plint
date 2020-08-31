@@ -13,7 +13,9 @@ export class UsercrudService {
 
   Url: string = 'http://15.207.181.67:3000';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
+
   isLogged: boolean = false;
+  
   constructor(private http: HttpClient,private toastr: ToastrService, public router: Router) { }
 
   login(value)
@@ -32,13 +34,13 @@ export class UsercrudService {
     return sessionStorage.getItem('access_token');
   }
 
-  createUser(user: User[]): Observable<any> {
+  createUser(user): Observable<any> {
     
     let API_URL = `${this.Url}/auth/users`;
     return this.http.post<User>(`${API_URL}`, user, {headers: this.headers})
     .pipe(
       map((data: any) => {
-        return data;
+        return data;  
       })
     )
     
@@ -54,7 +56,21 @@ export class UsercrudService {
         return throwError( 'Something went wrong!' );
       })
    )
-    }
+  }
+
+  deleteUser(user_id: String)
+  {
+    const headers: HttpHeaders = new HttpHeaders()
+    .append('Authorization', 'Bearer ' + window.sessionStorage.getItem('access_token'));
+    const httpOptions = {
+      headers: headers,
+      body: {
+       "user_id": user_id
+      }
+    };
+    let API_URL = `${this.Url}/admin/users`;
+    return this.http.delete(`${API_URL}`, httpOptions);
+  }
 
    // Returns true when user is looged in 
    isLoggedIn(): boolean {
