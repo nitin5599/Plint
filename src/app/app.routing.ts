@@ -6,6 +6,8 @@ import { LoginComponent } from './login/login.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UsertripComponent } from './usertrip/usertrip.component';
+
 import { HomeGuard } from './auth/home.guard';
 
 const routes: Routes =[
@@ -20,17 +22,27 @@ const routes: Routes =[
     children: [{
       path: '',
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
-    }]
+    },
+    // {
+    //   path: 'user/:id',
+    //   loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule',
+    //   component: UsertripComponent,  
+    // }
+   ]
   },
   {
     path: 'login',
     component: LoginComponent,  
   },
-  {
-    path: 'user-profile',
-    component: UserProfileComponent,
-    canActivate: [HomeGuard],   
-  },
+  // {
+  //   path: 'user-profile',
+  //   component: UserProfileComponent,
+  //   canActivate: [HomeGuard],   
+  // },
+  // {
+  //   path: 'usertrips',
+  //   component: UsertripComponent,  
+  // },
 ];
 
 @NgModule({

@@ -1,0 +1,188 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+
+  <!-- currency conversion transaction -->
+
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div  class="card-header rounded mdc-elevation--z6 card-header">
+            <h4 class="card-title ">Currency Conversion Transactions</h4>
+            <p class="card-category ">user's transaction info</p>
+        </div>        
+        <div class="card-body rounded mdc-elevation--z6">
+            <div  class="table-responsive">
+                <table class="table">
+                    <thead class=" text-black">
+                        <th>Receipt ID</th>
+                        <th>Source Holding</th>
+                        <th>Converted Holding</th>
+                        <th>Conversion Rate</th>
+                        <th>Remaks</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of items | paginate: { id: 'curr_con',
+                        itemsPerPage: 2,
+                        currentPage: curr_Page,
+                        totalItems: TotalRecords }">
+                            <td>{{data.receipt_id}}</td> 
+                            <td>{{data.source_holding.amount}} {{data.source_holding.currency}}</td>
+                            <td>{{data.converted_holding.amount}} {{data.converted_holding.currency}}</td> 
+                            <td>{{data.rate_of_conversion}}</td> 
+                            <td>{{data.remarks}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <pagination-controls id="curr_con" (pageChange)="curr_Page = $event" maxSize="9" directionLinks="true"></pagination-controls>
+               
+            </div>
+        </div>
+
+      </div>
+    </div>
+</div>
+
+
+  <!-- expense transaction -->
+
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div  class="card-header rounded mdc-elevation--z6 card-header">
+            <h4 class="card-title ">Expenses Transactions</h4>
+            <p class="card-category ">user's transaction info</p>
+        </div>
+        <div class="card-body rounded mdc-elevation--z6">
+            <div  class="table-responsive">
+                <table class="table">
+                    <thead class=" text-black">
+                        <th>Receipt ID</th>
+                        <th>Expense Type</th>
+                        <th>Total Expense</th>
+                        <th>Work Expense</th>
+                        <th>Personal Expense</th>
+                        <th>Remarks</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of items | paginate: { id: 'expense',
+                        itemsPerPage: 2,
+                        currentPage: expPage,
+                        totalItems: TotalRecords }">
+                            <td>{{data.receipt_id}}</td> 
+                            <td>{{data.expense_type}}</td>
+                            <td>{{data.total_expense.amount}} {{data.total_expense.currency}}</td>
+                            <td>{{data.work_expense.amount}} {{data.work_expense.currency}}</td> 
+                            <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
+                            <td>{{data.remarks}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls id="expense" (pageChange)="expPage = $event" maxSize="9" directionLinks="true"></pagination-controls>
+            </div>
+        </div>
+
+      </div>
+    </div>
+</div>
+
+  <!-- reimbursement transaction -->
+
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div  class="card-header rounded mdc-elevation--z6 card-header">
+            <h4 class="card-title ">Reimbursement Transactions</h4>
+            <p class="card-category ">user's transaction info</p>
+        </div>
+        <div class="card-body rounded mdc-elevation--z6">
+            <div  class="table-responsive">
+                <table class="table">
+                    <thead class=" text-black">
+                        <th>Receipt ID</th>
+                        <th>Total Expense</th>
+                        <th>Work Expense</th>
+                        <th>Personal Expense</th>
+                        <th>Remarks</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of items | paginate: { id: 'reimburse',
+                        itemsPerPage: 2,
+                        currentPage: reimbursePage,
+                        totalItems: TotalRecords }">
+                            <td>{{data.receipt_id}}</td>
+                            <td>{{data.total_expense.amount}} {{data.total_expense.currency}}</td>
+                            <td>{{data.work_expense.amount}} {{data.work_expense.currency}}</td> 
+                            <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
+                            <td>{{data.remarks}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls id="reimburse" (pageChange)="reimbursePage = $event" maxSize="9" directionLinks="true"></pagination-controls>
+            </div>
+        </div> 
+      </div>
+    </div>
+</div>
+
+  <!-- client reimbursement transaction -->
+
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div  class="card-header rounded mdc-elevation--z6 card-header">
+            <h4 class="card-title ">Client Reimbursement Transactions</h4>
+            <p class="card-category ">user's expenses info</p>
+        </div>
+        <div class="card-body rounded mdc-elevation--z6">
+            <div  class="table-responsive">
+                <table class="table">
+                    <thead class=" text-black">
+                        <th>Receipt ID</th>
+                        <th>Amount</th>
+                        <th>Receipt Url</th>
+                        <th>Conversion Rate</th>
+                        <th>Remarks</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of items | paginate: { id: 'client',
+                        itemsPerPage: 2,
+                        currentPage: clientPage,
+                        totalItems: TotalRecords }">
+                            <td>{{data.receipt_id}}</td> 
+                            <td>{{data.client_reimbursement_amount.amount}} {{data.client_reimbursement_amount.currency}}</td>
+                            <!-- <td>
+                                <img style="height: 100%;width:100%;" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
+                            </td> -->
+                            <td *ngIf="data.receipt_image_url">
+                                <div class="example-button-row">
+                                <button mat-raised-button color="primary"  (click) = "show()">View</button>
+                                </div>
+                                <div *ngIf="this.showModal == true" class="mt-2" style="height: 100%;width:100%;background-color: green;">
+                                    <button type="button" class="close" aria-label="Close" (click) = "hide()">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                       <p style="color: honeydew;">image</p>
+                                </div>
+                            </td>
+                            <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
+                            <td>{{data.rate_of_conversion}}</td>
+                            <td>{{data.remarks}}</td> 
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls id="client" (pageChange)="clientPage = $event" maxSize="9" directionLinks="true"></pagination-controls>
+            </div>
+        </div> 
+      </div>
+    </div>
+</div>
+ 
+</div>
+</div>
+
+
+
+
+
