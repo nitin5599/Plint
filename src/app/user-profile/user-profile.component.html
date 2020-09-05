@@ -91,7 +91,7 @@
                                   <td>{{data.email}}</td>
                                   <td>{{data.role}}</td>
                                   <td>{{data.is_expense_manager_user}}</td>
-                                  <td><button mat-raised-button type="submit" style="background-color: #1b96f3;" class="btn btn-Success pull-left">Edit</button></td>
+                                  <td><button mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/edit-profile/', data._id, data.employee_code]" class="btn btn-Success pull-left">Edit</button></td>
                                   <td><button mat-raised-button type="submit"  class="btn btn-danger pull-left" (click)="deluser(data._id)">Delete</button></td>
                               </tr>
                           </tbody>

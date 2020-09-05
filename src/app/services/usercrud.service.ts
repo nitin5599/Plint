@@ -15,7 +15,7 @@ export class UsercrudService {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   isLogged: boolean = false;
-  
+
   constructor(private http: HttpClient,private toastr: ToastrService, public router: Router) { }
 
   login(value)
@@ -34,8 +34,8 @@ export class UsercrudService {
     return sessionStorage.getItem('access_token');
   }
 
-  createUser(user): Observable<any> {
-    
+  createUser(user: any): Observable<any> 
+  {    
     let API_URL = `${this.Url}/auth/users`;
     return this.http.post<User>(`${API_URL}`, user, {headers: this.headers})
     .pipe(
@@ -46,16 +46,15 @@ export class UsercrudService {
     
   }
 
-  getUsers(){
-    let API_URL = `${this.Url}/common/users`;
-    return this.http.get(`${API_URL}`)
-    .pipe(
-      map((data: User[]) => {
-        return data;
-      }), catchError( error => {
-        return throwError( 'Something went wrong!' );
-      })
-   )
+  updateUser(user, user_id): Observable<any> 
+  {
+    const headers: HttpHeaders = new HttpHeaders()
+    .append('Authorization', 'Bearer ' + window.sessionStorage.getItem('access_token'));
+    const httpOptions = {
+      headers: headers
+    };
+    let API_URL = `${this.Url}/admin/users`;
+    return this.http.put<any>(`${API_URL}/${user_id}` , user, httpOptions);
   }
 
   deleteUser(user_id: String)
@@ -72,7 +71,7 @@ export class UsercrudService {
     return this.http.delete(`${API_URL}`, httpOptions);
   }
 
-   // Returns true when user is looged in 
+   // Returns true when user is logged in 
    isLoggedIn(): boolean {
     const token = window.sessionStorage.getItem('access_token');
     return (token !== null) ? true : false;

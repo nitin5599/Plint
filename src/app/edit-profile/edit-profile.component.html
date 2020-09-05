@@ -1,0 +1,72 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+       
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card  ">
+                    <div class="card-header rounded mdc-elevation--z6 card-header">
+                        <h4 class="card-title">Edit User</h4>
+                        <p class="card-category">update user profile</p>
+                    </div>
+                    <div class="card-body rounded mdc-elevation--z8">
+                        <form [formGroup]="editform" novalidate (ngSubmit)="onUpdate()">
+  
+                             <div class="col-md-4 form-group">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Employee Code" type="text" formControlName="employee_code">
+                                </mat-form-field>
+                              </div>
+  
+                              <div class="col-md-4 form-group">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Full Name" type="text" formControlName="name">
+                                  </mat-form-field>
+                              </div>
+                              
+                              <div class="col-md-4 form-group">
+                                  <mat-form-field appearance="fill">
+                                    <mat-label>Role</mat-label>
+                                    <mat-select formControlName="role" >
+                                      <mat-option *ngFor="let rol of role" [value]="rol">
+                                        {{rol}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                             </div>
+  
+                            
+                             <div class="col-md-4 form-group">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Email" formControlName="email" type="text">
+                                  </mat-form-field>
+                              </div>
+                            
+                              <div class="col-md-4 form-group">
+                                  <mat-form-field appearance="fill">
+                                    <mat-label>Expense Manager</mat-label>
+                                    <mat-select formControlName="is_expense_manager_user" >
+                                      <mat-option [value]=true>True</mat-option>
+                                      <mat-option [value]=false>False</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                              </div>
+                            
+                              <div class="col-md-4 mt-3">
+                                <button mat-raised-button type="submit"  class="btn btn-Success pull-left">Update Profile</button>
+                              </div>
+  
+                            <div class="clearfix"></div>
+                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        
+  
+    
+    </div>
+</div>
+  

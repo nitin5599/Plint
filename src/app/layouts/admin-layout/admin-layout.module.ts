@@ -18,6 +18,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { UsertripComponent } from '../../usertrip/usertrip.component';
 import { LoginComponent } from '../../login/login.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
+import { EditProfileComponent } from '../../edit-profile/edit-profile.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { UserProfileComponent } from '../../user-profile/user-profile.component'
   declarations: [
     LoginComponent,
     UserProfileComponent,
+    EditProfileComponent,
     UsertripComponent
   ]
 })

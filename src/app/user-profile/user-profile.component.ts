@@ -33,7 +33,10 @@ export class UserProfileComponent implements OnInit {
  
   items: Array<any>;
 
-  user: User[];
+  // user: User[];
+
+  user: any = {};
+  // AllUsers: any = {};
   
 
   constructor(public userservice: UsercrudService,private toastr: ToastrService,private http: HttpClient, public router: Router, public fb: FormBuilder) { }
@@ -50,9 +53,8 @@ export class UserProfileComponent implements OnInit {
       is_expense_manager_user: [ Validators.required],
       employee_code: ['', Validators.required],
   });
-
+  
   this.getData(); 
-
 }
 
 
@@ -72,21 +74,24 @@ showDelete() {
   {
     if(this.userform.valid)
     {     
-      var user = {
-        employee_code: this.userform.value.employee_code,
-        name: this.userform.value.name,
-        email: this.userform.value.email,
-        role: this.userform.value.role,
-        is_expense_manager_user: this.userform.value.is_expense_manager_user
-        }
-        // console.log(JSON.stringify(user));
-        this.userservice.createUser(user).subscribe(data => {
-          // console.log(data);
+      // var user = {
+      //   employee_code: this.userform.value.employee_code,
+      //   name: this.userform.value.name,
+      //   email: this.userform.value.email,
+      //   role: this.userform.value.role,
+      //   is_expense_manager_user: this.userform.value.is_expense_manager_user
+      //   }
+        
+        this.userservice.createUser(this.userform.value)
+        .subscribe(data => {
           this.showSubmit();
           this.getData();
-          this.reset();
+          // this.reset();
         });
 
+        this.user = Object.assign(this.user, this.userform.value);
+        this.addUser(this.user);
+        this.reset();
     }
     else 
       { 
@@ -97,6 +102,21 @@ showDelete() {
 
   }
 
+  addUser(user)
+  {
+    let users = [];
+    if(localStorage.getItem('Users'))
+    {
+      users = JSON.parse(localStorage.getItem('Users'));
+      users = [user, ...users];
+    }
+    else
+    {
+      users = [user];  
+    }
+    localStorage.setItem('Users', JSON.stringify(users));
+  }
+
   deluser(_id: String)
   {
     this.userservice.deleteUser(_id)
@@ -105,14 +125,11 @@ showDelete() {
       this.showDelete();
       this.getData();
     });
-
-    
   }
 
   getData(){
     this.http.get<any>('http://15.207.181.67:3000/admin/users?nonAdminUsers=false').subscribe(res => {
       this.items = res.data;
-      // console.log(this.items);
     });  
   }
 

@@ -29,7 +29,6 @@ import {MatButtonModule} from '@angular/material/button';
 // import {MatTableDataSourceModule} from '@angular/material/table';
 import {MatTableModule} from '@angular/material/table';
 import { CdkTableModule} from '@angular/cdk/table';
-import {DataSource} from '@angular/cdk/table';
 
 @NgModule({
   imports: [
@@ -60,6 +59,7 @@ import {DataSource} from '@angular/cdk/table';
     AdminLayoutComponent,
     SingleusertripComponent,
     SingleTransComponent,
+    // EditProfileComponent,
     // UsertripComponent,
 
   ],
