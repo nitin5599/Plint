@@ -2,9 +2,47 @@
 <div class="main-content">
     <div class="container-fluid">
 
-        <!-- <div > -->
             <button mat-raised-button *ngIf="this.ongoing == 'true'" (click)="EndTrip()" color="warn">END TRIP</button>
-        <!-- </div> -->
+
+    <div class="row mt-5">
+
+            <div  class="col-md-4 chart-container" style="position: relative; height:40vh; width:80vw">
+                <canvas baseChart
+                [data]="pieChartData" 
+                [labels]="pieChartLabels" 
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+                [colors]="pieChartColors" 
+                [legend]="pieChartLegend">
+              </canvas>
+            </div>
+
+            <div  class=" col-md-4  chart-container" style="position: relative; height:40vh; width:80vw">
+                <canvas baseChart
+                [data]="pieChartData" 
+                [labels]="pieChartLabels" 
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+                [colors]="pieChartColors" 
+                [legend]="pieChartLegend">
+              </canvas>
+            </div>
+
+            <div  class="col-md-4  chart-container" style="position: relative; height:40vh; width:80vw">
+                <canvas baseChart
+                [data]="pieChartData" 
+                [labels]="pieChartLabels" 
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+                [colors]="pieChartColors" 
+                [legend]="pieChartLegend">
+              </canvas>
+            </div>
+
+    </div>
   <!-- currency conversion transaction -->
 
   <div class="row ">
@@ -22,7 +60,8 @@
                         <th>Source Holding</th>
                         <th>Converted Holding</th>
                         <th>Conversion Rate</th>
-                        <th>Remaks</th>
+                        <th>Remarks</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of items | paginate: { id: 'curr_con',
@@ -34,6 +73,7 @@
                             <td>{{data.converted_holding.amount}} {{data.converted_holding.currency}}</td> 
                             <td>{{data.rate_of_conversion}}</td> 
                             <td>{{data.remarks}}</td>
+                            <td><button mat-raised-button color="primary">Verify</button></td>
                         </tr>
                     </tbody>
 
@@ -67,6 +107,7 @@
                         <th>Work Expense</th>
                         <th>Personal Expense</th>
                         <th>Remarks</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of items | paginate: { id: 'expense',
@@ -79,6 +120,7 @@
                             <td>{{data.work_expense.amount}} {{data.work_expense.currency}}</td> 
                             <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
                             <td>{{data.remarks}}</td>
+                            <td><button mat-raised-button color="primary">Verify</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -108,6 +150,7 @@
                         <th>Work Expense</th>
                         <th>Personal Expense</th>
                         <th>Remarks</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of items | paginate: { id: 'reimburse',
@@ -119,6 +162,7 @@
                             <td>{{data.work_expense.amount}} {{data.work_expense.currency}}</td> 
                             <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
                             <td>{{data.remarks}}</td>
+                            <td><button mat-raised-button color="primary">Verify</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -147,6 +191,7 @@
                         <th>Receipt Url</th>
                         <th>Conversion Rate</th>
                         <th>Remarks</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of items | paginate: { id: 'client',
@@ -172,6 +217,7 @@
                             <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
                             <td>{{data.rate_of_conversion}}</td>
                             <td>{{data.remarks}}</td> 
+                            <td><button mat-raised-button color="primary">Verify</button></td>
                         </tr>
                     </tbody>
                 </table>

@@ -51,7 +51,7 @@ import { ChartsModule } from 'ng2-charts';
     MatTabsModule, 
     MatDialogModule,
     NgxPaginationModule,
-    // ChartsModule
+    ChartsModule
 
 
   ],
