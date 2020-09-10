@@ -32,7 +32,7 @@ export class UsertripComponent implements OnInit {
   getData(){
     this.http.get<any>('http://15.207.181.67:3000/admin/users?nonAdminUsers=false').subscribe(res => {
       this.items = res.data;
-      console.log(this.items);
+      // console.log(this.items);
     });  
   }
 

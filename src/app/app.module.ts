@@ -21,14 +21,14 @@ import { UsercrudService } from './services/usercrud.service';
 import { AuthInterceptor} from './helpers/auth.interceptor';
 import { SingleusertripComponent } from './singleusertrip/singleusertrip.component';
 import { SingleTransComponent } from './single-trans/single-trans.component';
-// import { UsertripComponent } from './usertrip/usertrip.component'
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatSortModule} from '@angular/material/sort';
 import {MatButtonModule} from '@angular/material/button';
-// import {MatTableDataSourceModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import { CdkTableModule} from '@angular/cdk/table';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -48,10 +48,11 @@ import { CdkTableModule} from '@angular/cdk/table';
     MatButtonModule,
     CdkTableModule,
     MatTableModule,
-    MatTabsModule,  
-    NgxPaginationModule
-    // MatTableDataSourceModule
-    // MatTableDataSource
+    MatTabsModule, 
+    MatDialogModule,
+    NgxPaginationModule,
+    // ChartsModule
+
 
   ],
   declarations: [
@@ -59,8 +60,6 @@ import { CdkTableModule} from '@angular/cdk/table';
     AdminLayoutComponent,
     SingleusertripComponent,
     SingleTransComponent,
-    // EditProfileComponent,
-    // UsertripComponent,
 
   ],
   providers: [

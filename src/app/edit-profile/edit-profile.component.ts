@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormControl,FormBuilder,FormGroup,Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UsercrudService } from '../services/usercrud.service';
 import { ToastrService } from 'ngx-toastr';
-import {first} from "rxjs/operators";
-
+import { first } from "rxjs/operators";
 
 export interface User {
   employee_code: number;
@@ -31,12 +30,15 @@ export class EditProfileComponent implements OnInit {
   
   editform: FormGroup;
  
-  items: Array<any>;
+  items: [];
   emp_id: String;
   user_id: String;
   formupdated: boolean = false;
   user: User[];
   data: any;
+  pos: any;
+
+  datalist: [];
   
   constructor(public userservice: UsercrudService,private toastr: ToastrService,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
   {
@@ -50,32 +52,34 @@ export class EditProfileComponent implements OnInit {
       is_expense_manager_user: [ Validators.required],
       employee_code: ['', Validators.required],
   });
-  
+
     this.user_id = this.actRoute.snapshot.params.user_id;
-    this.emp_id = this.actRoute.snapshot.params.emp_id;
+
+    this.pos = this.actRoute.snapshot.params.i;
   }
+  
 
   ngOnInit(): void {
-    
-  let data = JSON.parse(localStorage.getItem('Users'));
-  for (var index in data) 
-  {
-    if(this.emp_id == data[index].employee_code)
-    {
-      this.editform = new FormGroup({
-        'employee_code': new FormControl( data[index].employee_code),
-        'name': new FormControl(data[index].name),
-        'role': new FormControl(data[index].role),
-        'email': new FormControl(data[index].email),
-        'is_expense_manager_user': new FormControl(data[index].is_expense_manager_user)
-      })
-    break;
-    }
-  }
-   
+    this.http.get<any>('http://15.207.181.67:3000/admin/users?nonAdminUsers=false').subscribe(res => {
+      this.items = res.data;
+      for (var index in res.data) 
+      {
+        if(this.user_id == res.data[index]._id)
+        {
+          this.editform = new FormGroup({
+            employee_code: new FormControl(res.data[index].employee_code),
+            name: new FormControl(res.data[index].name),
+            role: new FormControl(res.data[index].role),
+            email: new FormControl(res.data[index].email),
+            is_expense_manager_user: new FormControl(res.data[index].is_expense_manager_user)
+          })
+        break;
+        }
+      }
+    });  
+ 
   }
 
-  
 showupdate() 
 {
   this.toastr.success('updated successfully!');
@@ -103,5 +107,6 @@ onUpdate()
     });
 
 }
+
 
 }

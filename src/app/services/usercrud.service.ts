@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router} from '@angular/router';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { User} from '../user-profile/user-profile.component';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +14,11 @@ import { User} from '../user-profile/user-profile.component';
 export class UsercrudService {
 
   Url: string = 'http://15.207.181.67:3000';
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
+  headers = new HttpHeaders().set('Content-Type', 'application/json')
+  .append('Authorization', 'Bearer ' + window.sessionStorage.getItem('access_token'));
 
   isLogged: boolean = false;
+  items: [];
 
   constructor(private http: HttpClient,private toastr: ToastrService, public router: Router) { }
 
@@ -66,7 +70,7 @@ export class UsercrudService {
       body: {
        "user_id": user_id
       }
-    };
+    }; 
     let API_URL = `${this.Url}/admin/users`;
     return this.http.delete(`${API_URL}`, httpOptions);
   }
@@ -77,5 +81,54 @@ export class UsercrudService {
     return (token !== null) ? true : false;
   }
 
+
+  createTripUsd(trip_usd: any): Observable<any> 
+  {
+    const httpOptions = {
+        "starting_balance":
+         [{
+             "holding":
+            {
+             "currency":trip_usd.currency,
+             "amount":trip_usd.amount
+            },
+           "inr_to_usd_conversion_rate":trip_usd.rate  
+          }],
+          "employee_id": trip_usd.employee_id        
+    }; 
+
+    let API_URL = `${this.Url}/em/user/trip`;
+    return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
+    .pipe(
+      map((data: any) => {
+        return data;  
+      })
+    )
+  }
+
+  createTriplocal(trip_local: any): Observable<any> 
+  {
+    const httpOptions = 
+    {
+       "starting_balance": 
+       [{
+          "holding":
+           {
+            "amount":trip_local.amount,
+            "currency":trip_local.currency
+           },
+          "usd_to_local_currency_conversion_rate":trip_local.rate  
+        }],
+        "employee_id": trip_local.employee_id
+    }; 
+    let API_URL = `${this.Url}/em/user/trip`;
+    return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
+    .pipe(
+      map((data: any) => {
+        return data;  
+      })
+    )
+  }
+  
 }
 

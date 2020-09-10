@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl,FormBuilder,FormGroup,Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { UsercrudService } from '../services/usercrud.service';
+import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
+import { StartTripComponent } from '../start-trip/start-trip.component';
 
 @Component({
   selector: 'app-singleusertrip',
@@ -16,24 +21,43 @@ export class SingleusertripComponent implements OnInit {
   
   user_id: string;
   items: [];
+  count: any = true;
 
-  constructor(private http: HttpClient, private actRoute: ActivatedRoute ) { 
+  constructor(public userservice: UsercrudService, private dialog: MatDialog, private toastr: ToastrService,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
+  { 
     this.user_id = this.actRoute.snapshot.params.user_id;
   }
 
   ngOnInit(): void {
-    this.OngoingTrip();
+    this.OngoingTrip().subscribe(res =>{
+         this.items = res.data;
+         for (var index in res.data) 
+         {
+           if(res.data[index].ongoing)
+           {
+             this.count = false;
+           break;
+           }
+         }
+       });
   }
 
-  
   OngoingTrip()
   { 
     let API_URL = `${this.Url}/em/user/`+this.user_id+`/trip/list`;
-    this.http.get<any>(`${API_URL}`)
-    .subscribe(res => {
-      this.items = res.data;
-      console.log(this.items);
-    });
+    return this.http.get<any>(`${API_URL}`)
+    // .subscribe(res => {
+    //   this.items = res.data;
+    // });
   }
+
+    StartTrip(){
+    const dialogConfig = new MatDialogConfig();
+    // dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "60%";
+    this.dialog.open(StartTripComponent,dialogConfig);
+  }
+
 
 }

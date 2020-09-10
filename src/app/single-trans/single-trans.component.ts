@@ -6,6 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-single-trans',
@@ -25,15 +26,15 @@ export class SingleTransComponent implements OnInit {
   data: Array<any>;
   TotalRecords: String;
   Page: Number = 1;
-
-  
+  ongoing: string;
   showModal: boolean;
 
   closeResult: string;
   
-  constructor(private http: HttpClient, private actRoute: ActivatedRoute,private modalService: NgbModal, private sanitizer: DomSanitizer) { 
+  constructor(private http: HttpClient, private toastr: ToastrService,private router: Router, private actRoute: ActivatedRoute,private modalService: NgbModal, private sanitizer: DomSanitizer) { 
     this.user_id = this.actRoute.snapshot.params.user_id;
     this.trip_id = this.actRoute.snapshot.params.trip_id;
+    this.ongoing = this.actRoute.snapshot.params.state;
   }
 
   ngOnInit(): void {
@@ -46,15 +47,28 @@ export class SingleTransComponent implements OnInit {
 
     .subscribe((res: any) => {
       this.items = res.data;
-      this.TotalRecords = res.data.length;
-      console.log(this.items);
+      this.TotalRecords = res.length;
     });
   }
+
+showendtrip() 
+{
+  this.toastr.success('Trip ended successfully!');
+}
+  EndTrip()
+{
+  let API_URL = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/end';
+  this.http.put<any>(`${API_URL}`, {headers: this.headers})
+  .subscribe((res: any) => {
+    console.log(res);
+    this.showendtrip();
+    this.router.navigate(['usertrip/'+this.user_id]);
+  });
+}
 
   show()
   {
     this.showModal = true; // Show-Hide Modal Check
-    
   }
 
   //Bootstrap Modal Close event
