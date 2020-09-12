@@ -1,12 +1,12 @@
 <div class="main-content">
     <div class="container-fluid">
 
-            <div *ngIf="this.count == false; else elseBlock"></div>
+            <div *ngIf="this.count == false || this.items == null; else elseBlock"></div>
             <ng-template #elseBlock>        
                 <button (click)="StartTrip()" mat-raised-button color="primary">START TRIP</button>
             </ng-template>
 
-        <button *ngIf="this.items == null" (click)="StartTrip()"  mat-raised-button color="primary">START TRIP</button>
+        <!-- <button *ngIf="this.items == null" (click)="StartTrip()"  mat-raised-button color="primary">START TRIP</button> -->
 
 <div class="row ">
     <div class="col-md-12">

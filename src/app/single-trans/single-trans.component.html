@@ -6,10 +6,18 @@
 
     <div class="row mt-5">
 
-            <div  class="col-md-4 chart-container" style="position: relative; height:40vh; width:80vw">
+        <!-- current trip expenses -->
+            <div  class="col-md-4 mb-5 chart-container" style="position: relative; height:35vh; width:80vw">
+                <h3 class="text-center  mb-3">Current Expenses</h3>
+                <p id="d1" class="text-white" *ngIf="this.currLength == 0">NO TRANSACTIONS YET</p>
+                <canvas *ngIf="this.currLength == 0" baseChart
+                [data]="emptydata"
+                [chartType]="pieChartType"
+                [colors]="emptyColors"
+                [options]="emptyOptions"></canvas>
                 <canvas baseChart
-                [data]="pieChartData" 
-                [labels]="pieChartLabels" 
+                [data]="currentData" 
+                [labels]="currentLabels" 
                 [chartType]="pieChartType"
                 [options]="pieChartOptions"
                 [plugins]="pieChartPlugins"
@@ -18,10 +26,18 @@
               </canvas>
             </div>
 
-            <div  class=" col-md-4  chart-container" style="position: relative; height:40vh; width:80vw">
-                <canvas baseChart
-                [data]="pieChartData" 
-                [labels]="pieChartLabels" 
+            <!-- Today's trip expenses -->
+            <div class=" col-md-4 mb-5 chart-container" style="position: relative; height:35vh; width:80vw">
+                <h3 class="text-center mb-3">Today's Expenses</h3>
+                <p id="d2" class="text-white" *ngIf="this.todayLength == 0">NO TRANSACTIONS YET</p>
+                <canvas *ngIf="this.todayLength == 0" baseChart
+                [data]="emptydata" 
+                [chartType]="pieChartType"
+                [colors]="emptyColors"
+                [options]="emptyOptions"></canvas>
+                <canvas *ngIf="this.todayLength > 0" baseChart
+                [data]="todayData" 
+                [labels]="todayLabels" 
                 [chartType]="pieChartType"
                 [options]="pieChartOptions"
                 [plugins]="pieChartPlugins"
@@ -30,10 +46,18 @@
               </canvas>
             </div>
 
-            <div  class="col-md-4  chart-container" style="position: relative; height:40vh; width:80vw">
+            <!-- average trip expenses -->
+            <div  class="col-md-4 mb-5 chart-container" style="position: relative; height:35vh; width:80vw">
+                <h3 class="text-center mb-3">Average Expenses</h3>
+                <p id="d3" class="text-white" *ngIf="this.avgLength == 0">NO TRANSACTIONS YET</p>
+                <canvas *ngIf="this.avgLength == 0" baseChart
+                [data]="emptydata"
+                [chartType]="pieChartType"
+                [colors]="emptyColors"
+                [options]="emptyOptions"></canvas>
                 <canvas baseChart
-                [data]="pieChartData" 
-                [labels]="pieChartLabels" 
+                [data]="avgData" 
+                [labels]="avgLabels" 
                 [chartType]="pieChartType"
                 [options]="pieChartOptions"
                 [plugins]="pieChartPlugins"
@@ -43,9 +67,10 @@
             </div>
 
     </div>
+
   <!-- currency conversion transaction -->
 
-  <div class="row ">
+  <div class="row mt-5">
     <div class="col-md-12">
       <div class="card">
         <div  class="card-header rounded mdc-elevation--z6 card-header">

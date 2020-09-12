@@ -29,6 +29,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import { CdkTableModule} from '@angular/cdk/table';
 import { ChartsModule } from 'ng2-charts';
+import { TransLogComponent } from './trans-log/trans-log.component';
 
 @NgModule({
   imports: [
@@ -60,6 +61,7 @@ import { ChartsModule } from 'ng2-charts';
     AdminLayoutComponent,
     SingleusertripComponent,
     SingleTransComponent,
+    TransLogComponent,
 
   ],
   providers: [
