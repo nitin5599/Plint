@@ -86,19 +86,20 @@
                         <th>Converted Holding</th>
                         <th>Conversion Rate</th>
                         <th>Remarks</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of items | paginate: { id: 'curr_con',
                         itemsPerPage: 2,
                         currentPage: curr_Page,
-                        totalItems: TotalRecords }">
+                        totalItems: TotalRecords }; let i = index;">
                             <td>{{data.receipt_id}}</td> 
                             <td>{{data.source_holding.amount}} {{data.source_holding.currency}}</td>
                             <td>{{data.converted_holding.amount}} {{data.converted_holding.currency}}</td> 
                             <td>{{data.rate_of_conversion}}</td> 
                             <td>{{data.remarks}}</td>
-                            <td><button mat-raised-button color="primary">Verify</button></td>
+                            <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
+                            <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary" (click)="isVerify(data._id)">Verify</button></td>
                         </tr>
                     </tbody>
 
@@ -132,7 +133,7 @@
                         <th>Work Expense</th>
                         <th>Personal Expense</th>
                         <th>Remarks</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of items | paginate: { id: 'expense',
@@ -145,7 +146,8 @@
                             <td>{{data.work_expense.amount}} {{data.work_expense.currency}}</td> 
                             <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
                             <td>{{data.remarks}}</td>
-                            <td><button mat-raised-button color="primary">Verify</button></td>
+                            <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
+                            <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary">Verify</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -175,7 +177,7 @@
                         <th>Work Expense</th>
                         <th>Personal Expense</th>
                         <th>Remarks</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of items | paginate: { id: 'reimburse',
@@ -187,7 +189,8 @@
                             <td>{{data.work_expense.amount}} {{data.work_expense.currency}}</td> 
                             <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
                             <td>{{data.remarks}}</td>
-                            <td><button mat-raised-button color="primary">Verify</button></td>
+                            <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
+                            <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary">Verify</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -216,7 +219,7 @@
                         <th>Receipt Url</th>
                         <th>Conversion Rate</th>
                         <th>Remarks</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of items | paginate: { id: 'client',
@@ -242,7 +245,8 @@
                             <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
                             <td>{{data.rate_of_conversion}}</td>
                             <td>{{data.remarks}}</td> 
-                            <td><button mat-raised-button color="primary">Verify</button></td>
+                            <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
+                            <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary">Verify</button></td>
                         </tr>
                     </tbody>
                 </table>

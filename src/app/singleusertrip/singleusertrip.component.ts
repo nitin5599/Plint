@@ -30,7 +30,8 @@ export class SingleusertripComponent implements OnInit {
 
   ngOnInit(): void {
     this.OngoingTrip().subscribe(res =>{
-         this.items = res.data;
+      console.log(res);   
+      this.items = res.data;
          for (var index in res.data) 
          {
            if(res.data[index].ongoing)

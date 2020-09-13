@@ -118,6 +118,7 @@ export class SingleTransComponent implements OnInit {
     this.http.get<any>(`${API_URL}`)
 
     .subscribe((res: any) => {
+      console.log(res.data)
       this.items = res.data;
       this.TotalRecords = res.length;
     });
@@ -136,6 +137,17 @@ showendtrip()
     this.showendtrip();
     this.router.navigate(['usertrip/'+this.user_id]);
   });
+}
+
+isVerify(txnId: String)
+{
+  console.log(txnId);
+  let API_URL = this.Url+'/admin/trip/'+this.trip_id+'/transaction'+txnId+'/verify';
+  this.http.put<any>(`${API_URL}`, {headers: this.headers})
+  .subscribe((res: any) => {
+    console.log(res);
+  });
+
 }
 
 CurrentExpenses()
@@ -193,12 +205,14 @@ avgExpenses()
   let API_URL = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/analytics';
   this.http.get<any>(`${API_URL}`, {headers: this.headers})
   .subscribe((res: any) => {
-    console.log(res);
+    // console.log(res);
     let avg = res.data.current_trip_expenses;
     let num = res.data.num_trip_days_until_today;
+    if(num == 0)
+    {
+      num=1;
+    }
     this.avgLength = avg.length;
-    // console.log(this.todayLength);
-    // console.log(num);
     for (let i = 0; i < avg.length; i++)  
     {
       if(this.avgLabels !== [])
@@ -213,28 +227,6 @@ avgExpenses()
       }
     
     }
-    // let avg = res.data.average_per_day_expenses;
-    // this.avgLength = avg.length;
-    // for (let j = 0; j < avg.length; j++)  
-    // {
-      // console.log(avg.length); 
-      // let stat = res.data.average_per_day_expenses[i].stat;
-      // console.log(stat.length); 
-    //   for (let i = 0; i < stat.length; i++)  
-    // {
-    //   if(this.avgLabels !== [])
-    //   {
-    //     this.avgLabels.push(stat[i].category);
-    //     this.avgData.push(stat[i].expense.average_expense);
-    //   }
-    //   else
-    //   {
-    //     this.avgLabels = [stat[i].category];
-    //     this.avgData = [stat[i].expense.average_expense];  
-    //   }
-      
-    // }
-  // }
    });
 }
   show()
