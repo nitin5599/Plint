@@ -45,8 +45,8 @@
                             <!-- <td *ngIf="data.ongoing == true"> 
                                 <button mat-raised-button color="warn">END TRIP</button>
                             </td> -->
-                            <td style="color:red;" *ngIf="data.ongoing == true">Active</td>
-                            <td style="color:green;" *ngIf="data.ongoing == false">Completed</td>
+                            <td style="color:green;font-weight: 600;" *ngIf="data.ongoing == true">Active</td>
+                            <td style="color:blue;font-weight: 600;" *ngIf="data.ongoing == false">Completed</td>
                             <td>   
                                 <div class="example-button-row">
                                    <a mat-button  [routerLink]="['/transactions/', this.user_id , data._id, data.ongoing]">View</a>

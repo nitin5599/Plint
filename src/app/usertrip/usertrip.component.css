@@ -9,3 +9,8 @@
 .card-header .card-category {
     color: white;
 }
+
+tr:hover {
+    background-color: lightyellow;
+    cursor: pointer;
+  }
