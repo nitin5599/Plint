@@ -30,7 +30,6 @@ import {MatTableModule} from '@angular/material/table';
 import { CdkTableModule} from '@angular/cdk/table';
 import { ChartsModule } from 'ng2-charts';
 import { TransLogComponent } from './trans-log/trans-log.component';
-import { AddcurrencyComponent } from './addcurrency/addcurrency.component';
 import { UserslistComponent } from './userslist/userslist.component';
 
 @NgModule({

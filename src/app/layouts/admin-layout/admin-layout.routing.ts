@@ -8,7 +8,6 @@ import { SingleusertripComponent } from '../../singleusertrip/singleusertrip.com
 import { SingleTransComponent } from '../../single-trans/single-trans.component';
 import { StartTripComponent } from '../../start-trip/start-trip.component';
 import { TransLogComponent } from '../../trans-log/trans-log.component';
-import { AddcurrencyComponent } from '../../addcurrency/addcurrency.component';
 
 export const AdminLayoutRoutes: Routes = [
     
@@ -17,7 +16,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'edit-profile/:user_id/:i',   component: EditProfileComponent },
     { path: 'usertrips', component: UsertripComponent },
     { path: 'log', component: TransLogComponent },
-    // { path: 'addcurr', component: AddcurrencyComponent },
     { path: 'usertrip/start-trip/:_id', component: StartTripComponent },
     { path: 'usertrip/:user_id', component: SingleusertripComponent },
     { path: 'transactions/:user_id/:trip_id/:state', component: SingleTransComponent }

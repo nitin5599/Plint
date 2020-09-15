@@ -20,7 +20,6 @@ import { LoginComponent } from '../../login/login.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { EditProfileComponent } from '../../edit-profile/edit-profile.component';
 import { StartTripComponent } from '../../start-trip/start-trip.component';
-import { AddcurrencyComponent } from '../../addcurrency/addcurrency.component';
 import { UserslistComponent } from '../../userslist/userslist.component';
 
 @NgModule({
@@ -46,7 +45,6 @@ import { UserslistComponent } from '../../userslist/userslist.component';
     EditProfileComponent,
     UsertripComponent,
     StartTripComponent,
-    AddcurrencyComponent,
     UserslistComponent
 
   ]
