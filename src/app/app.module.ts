@@ -27,10 +27,14 @@ import { MatSortModule} from '@angular/material/sort';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatIconModule} from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkTableModule} from '@angular/cdk/table';
 import { ChartsModule } from 'ng2-charts';
 import { TransLogComponent } from './trans-log/trans-log.component';
 import { UserslistComponent } from './userslist/userslist.component';
+import { BackComponent } from './back/back.component';
 
 @NgModule({
   imports: [
@@ -51,8 +55,11 @@ import { UserslistComponent } from './userslist/userslist.component';
     CdkTableModule,
     MatTableModule,
     MatTabsModule, 
+    MatRadioModule,
     MatDialogModule,
+    MatFormFieldModule,
     NgxPaginationModule,
+    MatIconModule,
     ChartsModule
 
 
@@ -62,7 +69,8 @@ import { UserslistComponent } from './userslist/userslist.component';
     AdminLayoutComponent,
     SingleusertripComponent,
     SingleTransComponent,
-    TransLogComponent,
+    // TransLogComponent,
+    // BackComponent,
     // UserslistComponent,
     // AddcurrencyComponent,
 

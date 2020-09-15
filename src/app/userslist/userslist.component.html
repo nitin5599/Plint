@@ -1,7 +1,7 @@
 
 <div class="main-content">
     <div class="container-fluid">
-    
+      <app-back></app-back>
           <div class="row">
             <div class="col-md-12">
               <div class="card">
@@ -18,8 +18,7 @@
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>ExpenseManager</th>
-                                <th>Update</th>
-                                <th>Delete</th>
+                                <th colspan="2" class="text-center mr-5">Action</th>
                             </thead>
                             <tbody>
                                 <tr   *ngFor="let data of items; let i = index;">
@@ -28,9 +27,10 @@
                                     <td>{{data.email}}</td>
                                     <td>{{data.role}}</td>
                                     <td>{{data.is_expense_manager_user}}</td>
-                                    <td><button mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/edit-profile/', data._id, i]" class="btn btn-Success pull-left">Edit</button>
+                                    <td>
+                                      <button mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/edit-profile/', data._id, i]" class="btn btn-Success ">Edit</button>
                                     </td>
-                                    <td><button mat-raised-button type="submit"  class="btn btn-danger pull-left" (click)="deluser(data._id)">Delete</button></td>
+                                    <td><button mat-raised-button type="submit"  class="btn btn-danger pull-right" (click)="deluser(data._id)">Delete</button></td>
                                    
                                   </tr>
                             </tbody>

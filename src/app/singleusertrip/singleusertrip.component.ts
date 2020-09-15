@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UsercrudService } from '../services/usercrud.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
+import { Location } from '@angular/common';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
 
 @Component({
@@ -22,14 +23,14 @@ export class SingleusertripComponent implements OnInit {
   items: [];
   count: any = true;
 
-  constructor(public userservice: UsercrudService, private dialog: MatDialog, private toastr: ToastrService,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
+  constructor(public userservice: UsercrudService, private dialog: MatDialog, private location: Location, private toastr: ToastrService,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
   { 
     this.user_id = this.actRoute.snapshot.params.user_id;
   }
 
   ngOnInit(): void {
     this.OngoingTrip().subscribe(res =>{
-      // console.log(res);   
+      console.log(res);   
       this.items = res.data;
          for (var index in res.data) 
          {
@@ -40,6 +41,14 @@ export class SingleusertripComponent implements OnInit {
            }
          }
        });
+  }
+
+  goBack() {
+    this.location.back();
+  }
+  
+  goForward() {
+    this.location.forward();
   }
 
   OngoingTrip()

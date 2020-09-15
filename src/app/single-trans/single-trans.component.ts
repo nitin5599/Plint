@@ -6,6 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ChartType, ChartOptions, ChartLegendLabelOptions } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';
@@ -101,7 +102,7 @@ export class SingleTransComponent implements OnInit {
   currLength: any;
   avgLength: any;
   
-  constructor(private http: HttpClient, private toastr: ToastrService,private router: Router, private actRoute: ActivatedRoute,private modalService: NgbModal, private sanitizer: DomSanitizer) { 
+  constructor(private http: HttpClient, private toastr: ToastrService, private location: Location, private router: Router, private actRoute: ActivatedRoute,private modalService: NgbModal, private sanitizer: DomSanitizer) { 
     this.user_id = this.actRoute.snapshot.params.user_id;
     this.trip_id = this.actRoute.snapshot.params.trip_id;
     this.ongoing = this.actRoute.snapshot.params.state;
@@ -119,6 +120,14 @@ export class SingleTransComponent implements OnInit {
    this.avgExpenses();
   } 
 
+  goBack() {
+    this.location.back();
+  }
+  
+  goForward() {
+    this.location.forward();
+  }
+  
   isVerified()
   {
     this.toastr.success('Trip Verified!')
@@ -128,7 +137,7 @@ export class SingleTransComponent implements OnInit {
     this.http.get<any>(`${API_URL}`)
 
     .subscribe((res: any) => {
-      console.log(res.data)
+      // console.log(res.data)
       this.items = res.data;
       this.TotalRecords = res.length;
     });
@@ -139,7 +148,7 @@ export class SingleTransComponent implements OnInit {
     this.http.get<any>(`${API_URL}`)
 
     .subscribe((res: any) => {
-      console.log(res.data)
+      // console.log(res.data)
       this.expitems = res.data;
       this.TotalRecords = res.length;
     });
@@ -150,7 +159,7 @@ export class SingleTransComponent implements OnInit {
     this.http.get<any>(`${API_URL}`)
 
     .subscribe((res: any) => {
-      console.log(res.data)
+      // console.log(res.data)
       this.cli_items = res.data;
       this.TotalRecords = res.length;
     });
@@ -161,7 +170,7 @@ export class SingleTransComponent implements OnInit {
     this.http.get<any>(`${API_URL}`)
 
     .subscribe((res: any) => {
-      console.log(res.data)
+      // console.log(res.data)
       this.re_items = res.data;
       this.TotalRecords = res.length;
     });
@@ -176,7 +185,7 @@ showendtrip()
   let API_URL = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/end';
   this.http.put<any>(`${API_URL}`, {headers: this.headers})
   .subscribe((res: any) => {
-    console.log(res);
+    // console.log(res);
     this.showendtrip();
     this.router.navigate(['usertrip/'+this.user_id]);
   });
@@ -188,7 +197,7 @@ isVerify(txnId: String)
   let API_URL = this.Url+'/admin/trip/'+this.trip_id+'/transaction/'+txnId+'/verify';
   this.http.put<any>(`${API_URL}`, {headers: this.headers})
   .subscribe((res: any) => {
-    console.log(res);
+    // console.log(res);
     this.isVerified();
     this.ngOnInit()
   });

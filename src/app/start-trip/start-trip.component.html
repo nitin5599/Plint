@@ -1,7 +1,7 @@
 
 <div class="main-content">
     <div class="container-fluid">
-       
+        <app-back></app-back>
         <div class="row">
             <div class="col-md-12">
                 <div class="card  ">
@@ -25,7 +25,7 @@
                             <div  class="col-sm-3 form-group" >
                                 <mat-form-field appearance="fill">
                                   <mat-label>Currencies</mat-label>
-                                  <mat-select formControlName="currency" >
+                                  <mat-select formControlName="currency">
                                     <mat-option  *ngFor="let curr of currency" [value]="curr.identifier">
                                       {{curr.identifier}}
                                     </mat-option>
@@ -51,7 +51,7 @@
                         </div>
 
                             <div class="col-md-4 mt-5">
-                                <button mat-raised-button type="submit" class="btn btn-Success pull-left">Submit</button>
+                                <button  mat-raised-button color="primary" type="submit" class=" ml-0">SUBMIT</button>
                             </div>
   
                             <div class="clearfix"></div>

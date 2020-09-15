@@ -41,17 +41,21 @@
                             </div>
                           
                             <div class="col-md-4 form-group">
-                                <mat-form-field appearance="fill">
-                                  <mat-label>Expense Manager</mat-label>
-                                  <mat-select formControlName="is_expense_manager_user" >
+                                <!-- <mat-form-field appearance="fill"> -->
+                                  <mat-label class="row  mb-3 ml-0">Expense Manager</mat-label>
+                                  <mat-radio-group class="row mb-3 ml-0" formControlName="is_expense_manager_user" aria-label="Expense Manager">
+                                    <mat-radio-button [value]=true>True</mat-radio-button>
+                                    <mat-radio-button [value]=false>False</mat-radio-button>
+                                  </mat-radio-group>
+                                  <!-- <mat-select formControlName="is_expense_manager_user" >
                                     <mat-option [value]=true>True</mat-option>
                                     <mat-option [value]=false>False</mat-option>
-                                  </mat-select>
-                                </mat-form-field>
+                                  </mat-select> -->
+                                <!-- </mat-form-field> -->
                             </div>
                           
-                            <div class="col-md-4 mt-3">
-                              <button mat-raised-button type="submit"  class="btn btn-Success pull-left">Submit Profile</button>
+                            <div class="col-md-4 mt-3 mb-3">
+                              <button mat-raised-button color="warn" type="submit" >SUBMIT</button>
                             </div>
 
                           <div class="clearfix"></div>
@@ -62,42 +66,6 @@
           </div>
         </div>
   
-        <!-- <div class="row mt-5">
-          <div class="col-md-12">
-            <div class="card">
-              <div  class="card-header rounded mdc-elevation--z6 card-header">
-                  <h4 class="card-title ">Users</h4>
-                  <p class="card-category ">About users info</p>
-              </div>
-              <div class="card-body rounded mdc-elevation--z6">
-                  <div  class="table-responsive">
-                      <table class="table">
-                          <thead class=" text-black">
-                              <th>Empcode</th>
-                              <th>Name</th>
-                              <th>Email</th>
-                              <th>Role</th>
-                              <th>ExpenseManager</th>
-                              <th>Update</th>
-                              <th>Delete</th>
-                          </thead>
-                          <tbody>
-                              <tr   *ngFor="let data of items; let i = index;">
-                                  <td>{{data.employee_code}}</td>
-                                  <td>{{data.name}}</td>
-                                  <td>{{data.email}}</td>
-                                  <td>{{data.role}}</td>
-                                  <td>{{data.is_expense_manager_user}}</td>
-                                  <td><button mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/edit-profile/', data._id, i]" class="btn btn-Success pull-left">Edit</button>
-                                  </td>
-                                  <td><button mat-raised-button type="submit"  class="btn btn-danger pull-left" (click)="deluser(data._id)">Delete</button></td>
-                                 
-                                </tr>
-                          </tbody>
-                      </table>
-          </div>
-        </div> -->
-
-  
+      
   </div>
 </div>

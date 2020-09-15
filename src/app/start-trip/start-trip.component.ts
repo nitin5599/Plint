@@ -23,7 +23,6 @@ export class StartTripComponent implements OnInit {
   data: any;
   tripform: FormGroup;
 
-
   constructor(public userservice: UsercrudService,private toastr: ToastrService,private loc: Location,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
   { 
     this.emp_id = this.actRoute.snapshot.params._id;
@@ -60,7 +59,7 @@ initItemRows()
   return this.fb.group({
     amount:['', Validators.required] ,
     rate: ['', Validators.required],
-    currency: ['', Validators.required],
+    currency: ['USD', Validators.required],
   });
 }
 
@@ -126,7 +125,6 @@ this.userservice.userStartTrip(this.emp_id, starting_balance)
 }
 else 
 { 
-  alert(console.error());
   this.toastr.error('Error', 'Try again', {
   timeOut: 3000,
   });

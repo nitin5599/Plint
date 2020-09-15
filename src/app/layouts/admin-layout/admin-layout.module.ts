@@ -13,6 +13,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatIconModule } from '@angular/material/icon';
+
 // import {MatPaginatorModule} from '@angular/material/paginator';
 // import {MatTableDataSource} from '@angular/material/table';
 import { UsertripComponent } from '../../usertrip/usertrip.component';
@@ -21,6 +23,8 @@ import { UserProfileComponent } from '../../user-profile/user-profile.component'
 import { EditProfileComponent } from '../../edit-profile/edit-profile.component';
 import { StartTripComponent } from '../../start-trip/start-trip.component';
 import { UserslistComponent } from '../../userslist/userslist.component';
+import { BackComponent } from '../../back/back.component';
+import { TransLogComponent } from '../../trans-log/trans-log.component';
 
 @NgModule({
   imports: [
@@ -35,6 +39,7 @@ import { UserslistComponent } from '../../userslist/userslist.component';
     MatSelectModule,
     MatTooltipModule,
     MatRadioModule,
+    MatIconModule,
     MatTableModule,
     CdkTableModule
     // MatPaginatorModule
@@ -45,7 +50,9 @@ import { UserslistComponent } from '../../userslist/userslist.component';
     EditProfileComponent,
     UsertripComponent,
     StartTripComponent,
-    UserslistComponent
+    UserslistComponent,
+    TransLogComponent,
+    BackComponent
 
   ]
 })

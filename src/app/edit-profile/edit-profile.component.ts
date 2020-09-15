@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UsercrudService } from '../services/usercrud.service';
 import { ToastrService } from 'ngx-toastr';
 import { first } from "rxjs/operators";
+import { Location } from '@angular/common';
 
 export interface User {
   employee_code: number;
@@ -40,7 +41,7 @@ export class EditProfileComponent implements OnInit {
 
   datalist: [];
   
-  constructor(public userservice: UsercrudService,private toastr: ToastrService,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
+  constructor(public userservice: UsercrudService,private toastr: ToastrService, private location: Location, private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
   {
     this.editform = this.fb.group({
       email: ['', Validators.compose([
@@ -80,6 +81,14 @@ export class EditProfileComponent implements OnInit {
  
   }
 
+  goBack() {
+    this.location.back();
+  }
+  
+  goForward() {
+    this.location.forward();
+  }
+  
 showupdate() 
 {
   this.toastr.success('updated successfully!');

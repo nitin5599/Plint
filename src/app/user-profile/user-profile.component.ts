@@ -49,7 +49,7 @@ export class UserProfileComponent implements OnInit {
       ])],
       name: ['', Validators.required],
       role: ['', Validators.required],
-      is_expense_manager_user: [ Validators.required],
+      is_expense_manager_user: ['', Validators.required],
       employee_code: ['', Validators.required],
   });
 
@@ -71,7 +71,8 @@ showDelete() {
   onSubmit()
   {
     if(this.userform.valid)
-    {     
+    {
+      console.log(this.userform.value)     
         this.userservice.createUser(this.userform.value)
         .subscribe(data => {
           this.showSubmit();

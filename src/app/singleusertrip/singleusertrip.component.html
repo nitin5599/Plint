@@ -1,7 +1,7 @@
 <div class="main-content">
     <div class="container-fluid">
-
-            <div *ngIf="this.count == false || this.items == null; else elseBlock"></div>
+        <i class="fa fa-arrow-left" (click)="goBack()" aria-hidden="true"></i>
+      <div *ngIf="this.count == false || this.items == null; else elseBlock"></div>
             <ng-template #elseBlock>
                 <button [routerLink]="['/usertrip/start-trip/', this.user_id]" mat-raised-button color="primary">START TRIP</button>
             </ng-template>
@@ -24,9 +24,9 @@
                         <th>Starting Bal.</th>
                         <th>Current Bal.</th>
                         <th>Reimbursement Bal.</th>
+                        <th>Generate Sheet</th>
                         <th>Status</th>
                         <th>Action</th>
-                        <!-- <th>Currency</th> -->
                     </thead>
                     <tbody>
                         <tr  *ngFor="let data of items">
@@ -41,6 +41,10 @@
                             <td>
                                   <li style="list-style: none;" *ngFor="let r_bal of data.reimbursement_balance">{{r_bal.amount}} {{r_bal.currency}}</li>
                             </td> 
+                            <td *ngIf="data.expense_sheet_url == ''"></td>
+                            <td *ngIf="data.expense_sheet_url">
+                                <a mat-raised-button color="warn" href="{{data.expense_sheet_url}}">Generate</a>
+                            </td>
                             <td style="color:green;font-weight: 600;" *ngIf="data.ongoing == true">Active</td>
                             <td style="color:blue;font-weight: 600;" *ngIf="data.ongoing == false">Completed</td>
                             <td>   
@@ -48,9 +52,6 @@
                                    <a mat-button  [routerLink]="['/transactions/', this.user_id , data._id, data.ongoing]">View</a>
                                 </div>
                             </td>
-                            <!-- <td>
-                                <button (click)="add_curr(data._id)" mat-raised-button color="primary">Add</button>
-                            </td> -->
                         </tr>
                     </tbody>
                 </table>
