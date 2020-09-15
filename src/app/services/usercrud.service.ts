@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router} from '@angular/router';
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -81,22 +81,17 @@ export class UsercrudService {
     return (token !== null) ? true : false;
   }
 
-
-  createTripUsd(trip_usd: any): Observable<any> 
+  userStartTrip(emp_id: String, formcombo: any[]): Observable<any>
   {
     const httpOptions = {
         "starting_balance":
          [{
-             "holding":
-            {
-             "currency":trip_usd.currency,
-             "amount":trip_usd.amount
-            },
-           "inr_to_usd_conversion_rate":trip_usd.rate  
-          }],
-          "employee_id": trip_usd.employee_id        
+           formcombo,
+         }],
+          "employee_id": emp_id        
     }; 
-
+  
+    console.log(httpOptions)
     let API_URL = `${this.Url}/em/user/trip`;
     return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
     .pipe(
@@ -104,6 +99,32 @@ export class UsercrudService {
         return data;  
       })
     )
+  }
+
+
+  createTripUsd(emp_id: String, formArr: FormArray)
+  {
+    const httpOptions = {
+        "starting_balance":
+         [{
+             "holding":
+            {
+             "currency":formArr.controls["currency"],
+             "amount":formArr.controls["amount"]
+            },
+           "inr_to_usd_conversion_rate":formArr.controls["rate"]
+          }],
+          "employee_id": emp_id        
+    }; 
+
+    console.log(httpOptions)
+    // let API_URL = `${this.Url}/em/user/trip`;
+    // return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
+    // .pipe(
+    //   map((data: any) => {
+    //     return data;  
+    //   })
+    // )
   }
 
   createTriplocal(trip_local: any): Observable<any> 
@@ -129,6 +150,6 @@ export class UsercrudService {
       })
     )
   }
-  
+
 }
 

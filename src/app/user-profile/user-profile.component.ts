@@ -53,7 +53,6 @@ export class UserProfileComponent implements OnInit {
       employee_code: ['', Validators.required],
   });
 
-  this.getData(); 
 }
 
 
@@ -76,7 +75,7 @@ showDelete() {
         this.userservice.createUser(this.userform.value)
         .subscribe(data => {
           this.showSubmit();
-          this.getData();
+          this.router.navigateByUrl('/userslist');
         });
 
         this.reset();
@@ -88,22 +87,6 @@ showDelete() {
        });
       }
 
-  }
-
-  deluser(_id: String)
-  {
-    this.userservice.deleteUser(_id)
-    .subscribe((val) => {
-      console.log(val)
-      this.showDelete();
-      this.getData();
-    });
-  }
-
-  getData(){
-    this.http.get<any>('http://15.207.181.67:3000/admin/users?nonAdminUsers=false').subscribe(res => {
-      this.items = res.data;
-    });  
   }
 
   reset()

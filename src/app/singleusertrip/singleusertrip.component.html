@@ -2,8 +2,8 @@
     <div class="container-fluid">
 
             <div *ngIf="this.count == false || this.items == null; else elseBlock"></div>
-            <ng-template #elseBlock>        
-                <button (click)="StartTrip()" mat-raised-button color="primary">START TRIP</button>
+            <ng-template #elseBlock>
+                <button [routerLink]="['/usertrip/start-trip/', this.user_id]" mat-raised-button color="primary">START TRIP</button>
             </ng-template>
 
         <!-- <button *ngIf="this.items == null" (click)="StartTrip()"  mat-raised-button color="primary">START TRIP</button> -->
@@ -24,14 +24,14 @@
                         <th>Starting Bal.</th>
                         <th>Current Bal.</th>
                         <th>Reimbursement Bal.</th>
-                        <!-- <th>Trip</th> -->
                         <th>Status</th>
                         <th>Action</th>
+                        <!-- <th>Currency</th> -->
                     </thead>
                     <tbody>
                         <tr  *ngFor="let data of items">
-                            <td>{{data.started_at}}</td>
-                            <td>{{data.ended_at}}</td> 
+                            <td>{{data.started_at | date:'dd/MM/yyyy'}}</td>
+                            <td>{{data.ended_at | date:'dd/MM/yyyy'}}</td> 
                             <td>
                                 <li style="list-style: none;" *ngFor="let s_bal of data.starting_balance">{{s_bal.holding.amount}} {{s_bal.holding.currency}}</li>
                             </td>
@@ -41,10 +41,6 @@
                             <td>
                                   <li style="list-style: none;" *ngFor="let r_bal of data.reimbursement_balance">{{r_bal.amount}} {{r_bal.currency}}</li>
                             </td> 
-                            <!-- <td *ngIf="data.ongoing !== true"></td> -->
-                            <!-- <td *ngIf="data.ongoing == true"> 
-                                <button mat-raised-button color="warn">END TRIP</button>
-                            </td> -->
                             <td style="color:green;font-weight: 600;" *ngIf="data.ongoing == true">Active</td>
                             <td style="color:blue;font-weight: 600;" *ngIf="data.ongoing == false">Completed</td>
                             <td>   
@@ -52,6 +48,9 @@
                                    <a mat-button  [routerLink]="['/transactions/', this.user_id , data._id, data.ongoing]">View</a>
                                 </div>
                             </td>
+                            <!-- <td>
+                                <button (click)="add_curr(data._id)" mat-raised-button color="primary">Add</button>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>

@@ -6,7 +6,7 @@ import { UsercrudService } from '../services/usercrud.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
-import { StartTripComponent } from '../start-trip/start-trip.component';
+import { AddcurrencyComponent } from '../addcurrency/addcurrency.component';
 
 @Component({
   selector: 'app-singleusertrip',
@@ -52,12 +52,12 @@ export class SingleusertripComponent implements OnInit {
     // });
   }
 
-    StartTrip(){
+    add_curr(id: String){
     const dialogConfig = new MatDialogConfig();
     // dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "60%";
-    this.dialog.open(StartTripComponent,dialogConfig);
+    this.dialog.open(AddcurrencyComponent,dialogConfig);
   }
 
 

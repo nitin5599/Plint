@@ -10,21 +10,19 @@
                         <p class="card-category">about user's trip info</p>
                     </div>
                     <div class="card-body rounded mdc-elevation--z8">
-                        <form [formGroup]="tripform" novalidate (ngSubmit)="onSubmit()">
+                        
+                <form [formGroup]="tripform" novalidate (ngSubmit)="onSubmit()">
   
-                            <div class="col-md-4 form-group">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Employee Id" type="text" formControlName="employee_id">
-                                </mat-form-field>
-                            </div>
-
-                            <div  class="col-md-4 form-group">
+                    <div formArrayName="itemRows" *ngFor="let item of formArr.controls; let i = index">                       
+                        <div class="row"  [formGroupName]="i">
+ 
+                            <div  class="col-sm-3 form-group">
                                 <mat-form-field class="example-full-width">
                                   <input matInput placeholder="Amount" type="text" formControlName="amount">
                                 </mat-form-field>
                             </div>
 
-                            <div  class="col-md-4 form-group">
+                            <div  class="col-sm-3 form-group" >
                                 <mat-form-field appearance="fill">
                                   <mat-label>Currencies</mat-label>
                                   <mat-select formControlName="currency" >
@@ -35,13 +33,24 @@
                                 </mat-form-field>
                             </div>
                             
-                            <div class="col-md-4 form-group">
+                            <div class="col-sm-3 form-group" >
                                 <mat-form-field class="example-full-width">
                                   <input matInput placeholder="Conversion Rate" type="text" formControlName="rate" >
                                 </mat-form-field>
                             </div>
-                            
-                            <div class="col-md-4 mt-3">
+
+                            <div class="col-sm-3">
+                                <button  (click)="deleteRow(i)" class="btn btn-danger"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                            </div>
+
+                        </div>     
+                    </div>
+
+                        <div class="row col-md-4 ">
+                            <button type="button" (click)="addNewRow()" class="btn btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                        </div>
+
+                            <div class="col-md-4 mt-5">
                                 <button mat-raised-button type="submit" class="btn btn-Success pull-left">Submit</button>
                             </div>
   

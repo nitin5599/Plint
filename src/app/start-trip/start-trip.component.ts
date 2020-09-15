@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { FormControl,FormBuilder,FormGroup,Validators} from '@angular/forms';
+import { FormControl,FormBuilder,FormGroup,Validators, FormArray} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UsercrudService } from '../services/usercrud.service';
@@ -23,18 +23,20 @@ export class StartTripComponent implements OnInit {
   data: any;
   tripform: FormGroup;
 
+
   constructor(public userservice: UsercrudService,private toastr: ToastrService,private loc: Location,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
   { 
-    this.user_id = this.actRoute.snapshot.params.user_id;
+    this.emp_id = this.actRoute.snapshot.params._id;
+    // console.log(this.emp_id)
+
+    this.tripform = new FormGroup({
+      employee_id: new FormControl(),
+      itemRows: this.fb.array([this.initItemRows()]),
+    });
   }  
 
   ngOnInit(): void {
-    this.tripform = new FormGroup({
-      amount: new FormControl('', Validators.required),
-      rate: new FormControl('', Validators.required),
-      employee_id: new FormControl('', Validators.required),
-      currency: new FormControl('', Validators.required),
-    });
+    this.user_id = this.actRoute.snapshot.params.user_id;
     this.getCurrency();
   }
 
@@ -50,47 +52,89 @@ getCurrency()
     });  
 }
 
+get formArr() {
+  return this.tripform.get('itemRows') as FormArray;
+}
+
+initItemRows() 
+{
+  return this.fb.group({
+    amount:['', Validators.required] ,
+    rate: ['', Validators.required],
+    currency: ['', Validators.required],
+  });
+}
+
+addNewRow() {
+  this.formArr.push(this.initItemRows());
+}
+
+deleteRow(index: number) {
+  this.formArr.removeAt(index);
+}
+
 onSubmit()
 {
- if(this.tripform.valid)
+  if(this.tripform.valid)
   {     
-    if (this.tripform.value.currency == 'USD')
+  let num = (this.tripform.value.itemRows.length);
+ console.log(num)
+
+ let formusd = [];
+ let formlocal = [];
+  for(let i=0; i<num; i++)
+  {
+    if(this.tripform.value.itemRows[i].currency == 'USD')
     {
-      var trip_usd = {
-        employee_id: this.tripform.value.employee_id,
-        amount: parseInt(this.tripform.value.amount),
-        currency: this.tripform.value.currency,
-        rate: parseFloat(this.tripform.value.rate),   
-      }
-      this.userservice.createTripUsd(trip_usd)
-      .subscribe(res => {        
-        console.log(res);
-        this.showsubmit();
-        this.ngOnInit();
-        // this.refresh();
-        // this.router.navigate(['usertrip/'+this.user_id]);
-      });
-      this.reset();
-    }
+    // console.log(this.tripform.value.itemRows[i])
+    // parseInt(this.tripform.value.itemRows[i].amount)
+    // parseFloat(this.tripform.value.itemRows[i].rate)
+    // this.createTripUsd(this.tripform.value.itemRows[i]);
+    formusd.push(
+      
+         {
+             "holding":
+            {
+             "currency":this.tripform.value.itemRows[i].currency,
+             "amount":this.tripform.value.itemRows[i].amount
+            },
+           "inr_to_usd_conversion_rate":this.tripform.value.itemRows[i].rate
+          }
+      
+     );
+  }
     else
     {
-      var trip_local = {
-        employee_id: this.tripform.value.employee_id,
-        amount: parseInt(this.tripform.value.amount),
-        currency: this.tripform.value.currency,
-        rate: parseFloat(this.tripform.value.rate),
+     // console.log(this.tripform.value.itemRows[i])
+    //  formlocal.push(this.tripform.value.itemRows[i]);
+    formlocal.push(
+     {
+             "holding":
+            {
+             "currency":this.tripform.value.itemRows[i].currency,
+             "amount":this.tripform.value.itemRows[i].amount
+            },
+           "usd_to_local_currency_conversion_rate":this.tripform.value.itemRows[i].rate
+          
       }
-      this.userservice.createTriplocal(trip_local)
-      .subscribe(res => {
-        console.log(res);
-        this.showsubmit();
-        // this.refresh();
-        // this.router.navigate(['usertrip/'+this.user_id]);
-      });
-      this.reset();
+     );
     }
-  
   }
+
+console.log(formusd);
+console.log(formlocal);
+let formcombo: any[] = formusd.concat(formlocal);
+console.log(formcombo)
+
+this.userservice.userStartTrip(this.emp_id, formcombo)
+.subscribe((res) =>{
+console.log(res)
+this.showsubmit();
+this.reset();
+}
+);
+
+}
   else 
   { 
     alert(console.error());
@@ -101,12 +145,54 @@ onSubmit()
 
 }
 
-// refresh(): void{
-//   this.router.navigateByUrl("/usertrip/"+this.user_id , { skipLocationChange: true }).then(() => {
-//     console.log(decodeURI(this.loc.path()));
-//     this.router.navigate([decodeURI(this.loc.path())]);
-//   })
-// }
+
+createTripUsd( formcombo: FormArray)
+{
+  const httpOptions = {
+      "starting_balance":
+       [
+         formcombo,
+       ],
+        "employee_id": this.emp_id        
+  }; 
+
+  console.log(httpOptions)
+  // let API_URL = `${this.Url}/em/user/trip`;
+  // return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
+  // .pipe(
+  //   map((data: any) => {
+  //     return data;  
+  //   })
+  // )
+}
+
+createTriplocal(formlocal: FormArray)
+{
+  const httpOptions = 
+  {
+     "starting_balance": 
+     [{
+        "holding":
+         {
+          "amount":formlocal.controls['amount'].value,
+          "currency":formlocal.controls['currency'].value
+         },
+        "usd_to_local_currency_conversion_rate":formlocal.controls['rate'].value  
+      }],
+      "employee_id": this.emp_id  
+  }; 
+  console.log(httpOptions)
+  // let API_URL = `${this.Url}/em/user/trip`;
+  // return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
+  // .pipe(
+  //   map((data: any) => {
+  //     return data;  
+  //   })
+  // )
+}
+
+
+
 
 reset()
 {
@@ -121,3 +207,41 @@ this.tripform = this.fb.group({
 }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// onSubmit(){
+  // let formControls = new FormArray([]);
+  // formControls = <FormArray>this.reviewForm.get('controlArray');
+  // this.formService.createForm(formControls)
+  //   .subscribe(
+  //     data => console.log(data),
+  //     error => console.error(error)
+  // );
+  // this.reviewForm.reset();
+  // // console.log(formControls);        
+// }
+
+// @Injectable()
+// export class FormService {
+//   constructor(private http: Http) {}
+
+//   createForm(formControls: FormArray) {
+//       const body = JSON.stringify(formControls); //this gives error
+//       const headers = new Headers({'Content-Type': 'application/json'});
+//       return this.http.post('http://localhost:3000/api/form', body, {headers: headers})
+//           .map((response: Response) => response.json())
+//           .catch((error: Response) => Observable.throw(error.json()));
+//   }
+
+// }

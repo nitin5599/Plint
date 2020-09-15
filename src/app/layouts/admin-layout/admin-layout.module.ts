@@ -20,6 +20,8 @@ import { LoginComponent } from '../../login/login.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { EditProfileComponent } from '../../edit-profile/edit-profile.component';
 import { StartTripComponent } from '../../start-trip/start-trip.component';
+import { AddcurrencyComponent } from '../../addcurrency/addcurrency.component';
+import { UserslistComponent } from '../../userslist/userslist.component';
 
 @NgModule({
   imports: [
@@ -43,7 +45,10 @@ import { StartTripComponent } from '../../start-trip/start-trip.component';
     UserProfileComponent,
     EditProfileComponent,
     UsertripComponent,
-    StartTripComponent
+    StartTripComponent,
+    AddcurrencyComponent,
+    UserslistComponent
+
   ]
 })
 

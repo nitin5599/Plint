@@ -90,7 +90,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of items | paginate: { id: 'curr_con',
-                        itemsPerPage: 2,
+                        itemsPerPage: 10,
                         currentPage: curr_Page,
                         totalItems: TotalRecords }; let i = index;">
                             <td>{{data.receipt_id}}</td> 
@@ -136,8 +136,8 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of items | paginate: { id: 'expense',
-                        itemsPerPage: 2,
+                        <tr *ngFor="let data of expitems | paginate: { id: 'expense',
+                        itemsPerPage: 10,
                         currentPage: expPage,
                         totalItems: TotalRecords }">
                             <td>{{data.receipt_id}}</td> 
@@ -180,8 +180,8 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of items | paginate: { id: 'reimburse',
-                        itemsPerPage: 2,
+                        <tr *ngFor="let data of cli_items | paginate: { id: 'reimburse',
+                        itemsPerPage: 10,
                         currentPage: reimbursePage,
                         totalItems: TotalRecords }">
                             <td>{{data.receipt_id}}</td>
@@ -222,10 +222,10 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of items | paginate: { id: 'client',
-                        itemsPerPage: 2,
+                        <tr *ngFor="let data of re_items | paginate: { id: 'client',
+                        itemsPerPage: 10,
                         currentPage: clientPage,
-                        totalItems: TotalRecords }">
+                        totalItems: TotalRecords }; let i = index">
                             <td>{{data.receipt_id}}</td> 
                             <td>{{data.client_reimbursement_amount.amount}} {{data.client_reimbursement_amount.currency}}</td>
                             <!-- <td>

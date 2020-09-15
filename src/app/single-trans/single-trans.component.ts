@@ -25,6 +25,9 @@ export class SingleTransComponent implements OnInit {
   user_id: string;
   trip_id: string;
   items: Array<any>;
+  expitems: Array<any>;
+  cli_items: Array<any>;
+  re_items: Array<any>;
   data: Array<any>;
   TotalRecords: String;
   Page: Number = 1;
@@ -107,19 +110,55 @@ export class SingleTransComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.Triptrans();
+   this.curr_trans();
+   this.exptrans();
+   this.client_re_trans();
+   this.client_trans();
    this.CurrentExpenses();
    this.todayExpenses();
    this.avgExpenses();
   } 
 
-  Triptrans() { 
-    let API_URL = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/transaction/list?skip=0&limit=100&sortBy=created_on&sortOrder=desc';
+  curr_trans() { 
+    let API_URL = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/transaction/list?skip=0&limit=100&sortBy=created_on&sortOrder=desc&type=currency_conversion';
     this.http.get<any>(`${API_URL}`)
 
     .subscribe((res: any) => {
       console.log(res.data)
       this.items = res.data;
+      this.TotalRecords = res.length;
+    });
+  }
+
+  exptrans() { 
+    let API_URL = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/transaction/list?skip=0&limit=100&sortBy=created_on&sortOrder=desc&type=expense';
+    this.http.get<any>(`${API_URL}`)
+
+    .subscribe((res: any) => {
+      console.log(res.data)
+      this.expitems = res.data;
+      this.TotalRecords = res.length;
+    });
+  }
+
+  client_trans() { 
+    let API_URL = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/transaction/list?skip=0&limit=100&sortBy=created_on&sortOrder=desc&type=reimbursement';
+    this.http.get<any>(`${API_URL}`)
+
+    .subscribe((res: any) => {
+      console.log(res.data)
+      this.cli_items = res.data;
+      this.TotalRecords = res.length;
+    });
+  }
+
+  client_re_trans() { 
+    let API_URL = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/transaction/list?skip=0&limit=100&sortBy=created_on&sortOrder=desc&type=client_reimbursement';
+    this.http.get<any>(`${API_URL}`)
+
+    .subscribe((res: any) => {
+      console.log(res.data)
+      this.re_items = res.data;
       this.TotalRecords = res.length;
     });
   }
