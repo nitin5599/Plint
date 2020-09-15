@@ -27,7 +27,6 @@ export class StartTripComponent implements OnInit {
   constructor(public userservice: UsercrudService,private toastr: ToastrService,private loc: Location,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
   { 
     this.emp_id = this.actRoute.snapshot.params._id;
-    // console.log(this.emp_id)
 
     this.tripform = new FormGroup({
       employee_id: new FormControl(),
@@ -75,173 +74,74 @@ deleteRow(index: number) {
 
 onSubmit()
 {
-  if(this.tripform.valid)
-  {     
+  
+if(this.tripform.valid)
+{     
   let num = (this.tripform.value.itemRows.length);
- console.log(num)
-
- let formusd = [];
- let formlocal = [];
+  let starting_balance = [];
+  
   for(let i=0; i<num; i++)
   {
-    if(this.tripform.value.itemRows[i].currency == 'USD')
+    if(this.tripform.value.itemRows[i].currency == "USD")
     {
-    // console.log(this.tripform.value.itemRows[i])
-    // parseInt(this.tripform.value.itemRows[i].amount)
-    // parseFloat(this.tripform.value.itemRows[i].rate)
-    // this.createTripUsd(this.tripform.value.itemRows[i]);
-    formusd.push(
-      
+    let usdamount = parseInt(this.tripform.value.itemRows[i].amount)
+    let usdrate = parseFloat(this.tripform.value.itemRows[i].rate)
+    starting_balance.push(
          {
              "holding":
             {
              "currency":this.tripform.value.itemRows[i].currency,
-             "amount":this.tripform.value.itemRows[i].amount
+             "amount":usdamount
             },
-           "inr_to_usd_conversion_rate":this.tripform.value.itemRows[i].rate
+           "inr_to_usd_conversion_rate":usdrate
           }
-      
      );
-  }
+    }
     else
     {
-     // console.log(this.tripform.value.itemRows[i])
-    //  formlocal.push(this.tripform.value.itemRows[i]);
-    formlocal.push(
+    let localamount = parseInt(this.tripform.value.itemRows[i].amount)
+    let localrate = parseFloat(this.tripform.value.itemRows[i].rate)
+    starting_balance.push(
      {
              "holding":
             {
              "currency":this.tripform.value.itemRows[i].currency,
-             "amount":this.tripform.value.itemRows[i].amount
+             "amount":localamount
             },
-           "usd_to_local_currency_conversion_rate":this.tripform.value.itemRows[i].rate
-          
+           "usd_to_local_currency_conversion_rate":localrate
       }
      );
     }
+
   }
 
-console.log(formusd);
-console.log(formlocal);
-let formcombo: any[] = formusd.concat(formlocal);
-console.log(formcombo)
-
-this.userservice.userStartTrip(this.emp_id, formcombo)
-.subscribe((res) =>{
-console.log(res)
-this.showsubmit();
-this.reset();
-}
-);
+this.userservice.userStartTrip(this.emp_id, starting_balance)
+  .subscribe((res) =>{
+      console.log(res)
+      this.showsubmit();
+      this.reset(); 
+      this.router.navigateByUrl('/usertrips');
+   });
 
 }
-  else 
-  { 
-    alert(console.error());
-    this.toastr.error('Error', 'Try again', {
-    timeOut: 3000,
-    });
-  }
-
+else 
+{ 
+  alert(console.error());
+  this.toastr.error('Error', 'Try again', {
+  timeOut: 3000,
+  });
 }
 
-
-createTripUsd( formcombo: FormArray)
-{
-  const httpOptions = {
-      "starting_balance":
-       [
-         formcombo,
-       ],
-        "employee_id": this.emp_id        
-  }; 
-
-  console.log(httpOptions)
-  // let API_URL = `${this.Url}/em/user/trip`;
-  // return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
-  // .pipe(
-  //   map((data: any) => {
-  //     return data;  
-  //   })
-  // )
 }
-
-createTriplocal(formlocal: FormArray)
-{
-  const httpOptions = 
-  {
-     "starting_balance": 
-     [{
-        "holding":
-         {
-          "amount":formlocal.controls['amount'].value,
-          "currency":formlocal.controls['currency'].value
-         },
-        "usd_to_local_currency_conversion_rate":formlocal.controls['rate'].value  
-      }],
-      "employee_id": this.emp_id  
-  }; 
-  console.log(httpOptions)
-  // let API_URL = `${this.Url}/em/user/trip`;
-  // return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
-  // .pipe(
-  //   map((data: any) => {
-  //     return data;  
-  //   })
-  // )
-}
-
-
-
 
 reset()
 {
-
 this.tripform = this.fb.group({
   employee_id: "",
   amount: "",
   currency: "",
   rate: "",  
 });
-
 }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// onSubmit(){
-  // let formControls = new FormArray([]);
-  // formControls = <FormArray>this.reviewForm.get('controlArray');
-  // this.formService.createForm(formControls)
-  //   .subscribe(
-  //     data => console.log(data),
-  //     error => console.error(error)
-  // );
-  // this.reviewForm.reset();
-  // // console.log(formControls);        
-// }
-
-// @Injectable()
-// export class FormService {
-//   constructor(private http: Http) {}
-
-//   createForm(formControls: FormArray) {
-//       const body = JSON.stringify(formControls); //this gives error
-//       const headers = new Headers({'Content-Type': 'application/json'});
-//       return this.http.post('http://localhost:3000/api/form', body, {headers: headers})
-//           .map((response: Response) => response.json())
-//           .catch((error: Response) => Observable.throw(error.json()));
-//   }
-
-// }

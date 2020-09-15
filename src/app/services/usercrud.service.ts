@@ -81,67 +81,13 @@ export class UsercrudService {
     return (token !== null) ? true : false;
   }
 
-  userStartTrip(emp_id: String, formcombo: any[]): Observable<any>
+  userStartTrip(emp_id: String, starting_balance: any[]): Observable<any>
   {
     const httpOptions = {
-        "starting_balance":
-         [{
-           formcombo,
-         }],
+           starting_balance,
           "employee_id": emp_id        
     }; 
   
-    console.log(httpOptions)
-    let API_URL = `${this.Url}/em/user/trip`;
-    return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
-    .pipe(
-      map((data: any) => {
-        return data;  
-      })
-    )
-  }
-
-
-  createTripUsd(emp_id: String, formArr: FormArray)
-  {
-    const httpOptions = {
-        "starting_balance":
-         [{
-             "holding":
-            {
-             "currency":formArr.controls["currency"],
-             "amount":formArr.controls["amount"]
-            },
-           "inr_to_usd_conversion_rate":formArr.controls["rate"]
-          }],
-          "employee_id": emp_id        
-    }; 
-
-    console.log(httpOptions)
-    // let API_URL = `${this.Url}/em/user/trip`;
-    // return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
-    // .pipe(
-    //   map((data: any) => {
-    //     return data;  
-    //   })
-    // )
-  }
-
-  createTriplocal(trip_local: any): Observable<any> 
-  {
-    const httpOptions = 
-    {
-       "starting_balance": 
-       [{
-          "holding":
-           {
-            "amount":trip_local.amount,
-            "currency":trip_local.currency
-           },
-          "usd_to_local_currency_conversion_rate":trip_local.rate  
-        }],
-        "employee_id": trip_local.employee_id
-    }; 
     let API_URL = `${this.Url}/em/user/trip`;
     return this.http.post<any>(`${API_URL}`, httpOptions, {headers: this.headers})
     .pipe(
