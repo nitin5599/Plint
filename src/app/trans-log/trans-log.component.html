@@ -1,1 +1,27 @@
-<p>trans-log works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+
+<div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div  class="card-header rounded mdc-elevation--z6 card-header">
+            <h4 class="card-title ">Transaction Logs</h4>
+            <p class="card-category ">See logs info here</p>
+        </div>
+        <div class="card-body rounded mdc-elevation--z6">
+            <div  class="table-responsive">
+                <table class="table">
+                    <thead class=" text-black">
+                        <th>Message</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of items">
+                            <td *ngIf="data.log_action == 'create'">{{data.message}}</td>
+                            <td *ngIf="data.log_action == 'update'" style="font-weight: 400;background-color: rgb(255,235,238,1);">{{data.message}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
+  </div>
+</div>
+</div>

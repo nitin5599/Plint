@@ -27,7 +27,9 @@
             </div>
 
             <!-- Today's trip expenses -->
+            <div *ngIf="this.ongoing == true ">
             <div class=" col-md-4 mb-5 chart-container" style="position: relative; height:35vh; width:80vw">
+              
                 <h3 class="text-center mb-3">Today's Expenses</h3>
                 <p id="d2" class="text-white" *ngIf="this.todayLength == 0">NO TRANSACTIONS YET</p>
                 <canvas *ngIf="this.todayLength == 0" baseChart
@@ -44,6 +46,7 @@
                 [colors]="pieChartColors" 
                 [legend]="pieChartLegend">
               </canvas>
+             </div>
             </div>
 
             <!-- average trip expenses -->
@@ -147,7 +150,7 @@
                             <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
                             <td>{{data.remarks}}</td>
                             <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
-                            <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary">Verify</button></td>
+                            <td *ngIf="data.is_verified == false"><button (click)="isVerify(data._id)" mat-raised-button color="primary">Verify</button></td>
                         </tr>
                     </tbody>
                 </table>

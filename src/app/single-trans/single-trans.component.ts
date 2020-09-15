@@ -119,6 +119,10 @@ export class SingleTransComponent implements OnInit {
    this.avgExpenses();
   } 
 
+  isVerified()
+  {
+    this.toastr.success('Trip Verified!')
+  }
   curr_trans() { 
     let API_URL = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/transaction/list?skip=0&limit=100&sortBy=created_on&sortOrder=desc&type=currency_conversion';
     this.http.get<any>(`${API_URL}`)
@@ -181,10 +185,12 @@ showendtrip()
 isVerify(txnId: String)
 {
   console.log(txnId);
-  let API_URL = this.Url+'/admin/trip/'+this.trip_id+'/transaction'+txnId+'/verify';
+  let API_URL = this.Url+'/admin/trip/'+this.trip_id+'/transaction/'+txnId+'/verify';
   this.http.put<any>(`${API_URL}`, {headers: this.headers})
   .subscribe((res: any) => {
     console.log(res);
+    this.isVerified();
+    this.ngOnInit()
   });
 
 }
