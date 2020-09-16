@@ -1,6 +1,6 @@
 <div class="main-content">
     <div class="container-fluid">
-        <i class="fa fa-arrow-left" (click)="goBack()" aria-hidden="true"></i>
+        <i class="row mb-5 ml-2 fa fa-arrow-left" (click)="goBack()" aria-hidden="true"></i>
       <div *ngIf="this.count == false || this.items == null; else elseBlock"></div>
             <ng-template #elseBlock>
                 <button [routerLink]="['/usertrip/start-trip/', this.user_id]" mat-raised-button color="primary">START TRIP</button>

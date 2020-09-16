@@ -216,8 +216,8 @@ CurrentExpenses()
     {
       if(this.currentLabels !== [])
       {
-        this.currentLabels.push(curr[i].code);
-        this.currentData.push(curr[i].amount);
+        this.currentLabels.push(curr[i].code);  
+        this.currentData.push(Math.round((curr[i].amount)*1000)/1000);
       }
       else
       {
@@ -242,7 +242,7 @@ todayExpenses()
       if(this.todayLabels !== [])
       {
         this.todayLabels.push(today[i].code);
-        this.todayData.push(today[i].amount);
+        this.todayData.push(Math.round((today[i].amount)*1000)/1000);
       }
       else
       {
@@ -272,7 +272,7 @@ avgExpenses()
       if(this.avgLabels !== [])
       {
         this.avgLabels.push(avg[i].code);
-        this.avgData.push(avg[i].amount/num);
+        this.avgData.push(Math.round((avg[i].amount/num)*1000)/1000);
       }
       else
       {

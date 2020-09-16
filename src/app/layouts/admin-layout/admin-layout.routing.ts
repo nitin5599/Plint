@@ -8,16 +8,17 @@ import { SingleusertripComponent } from '../../singleusertrip/singleusertrip.com
 import { SingleTransComponent } from '../../single-trans/single-trans.component';
 import { StartTripComponent } from '../../start-trip/start-trip.component';
 import { TransLogComponent } from '../../trans-log/trans-log.component';
+import { HomeGuard } from 'app/auth/home.guard';
 
 export const AdminLayoutRoutes: Routes = [
     
-    { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'userslist',   component: UserslistComponent },
-    { path: 'edit-profile/:user_id/:i',   component: EditProfileComponent },
-    { path: 'usertrips', component: UsertripComponent },
-    { path: 'log', component: TransLogComponent },
-    { path: 'usertrip/start-trip/:_id', component: StartTripComponent },
-    { path: 'usertrip/:user_id', component: SingleusertripComponent },
-    { path: 'transactions/:user_id/:trip_id/:state', component: SingleTransComponent }
+    { path: 'user-profile', component: UserProfileComponent , canActivate:[HomeGuard]},
+    { path: 'userslist', component: UserslistComponent , canActivate:[HomeGuard]},
+    { path: 'edit-profile/:user_id/:i', component: EditProfileComponent , canActivate:[HomeGuard]},
+    { path: 'usertrips', component: UsertripComponent , canActivate:[HomeGuard]},
+    { path: 'log', component: TransLogComponent , canActivate:[HomeGuard]},
+    { path: 'usertrip/start-trip/:_id', component: StartTripComponent , canActivate:[HomeGuard]},
+    { path: 'usertrip/:user_id', component: SingleusertripComponent , canActivate:[HomeGuard]},
+    { path: 'transactions/:user_id/:trip_id/:state', component: SingleTransComponent , canActivate:[HomeGuard]}
 
 ];

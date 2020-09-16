@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class HomeGuard implements CanActivate {
   
   constructor(public userService: UsercrudService, public router: Router) { }
@@ -14,16 +15,13 @@ export class HomeGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-      if(this.userService.isLoggedIn()) 
-      {
-         this.router.navigate(['user-profile']);
-         return true;
-      }
-      else
+      if(!this.userService.isLoggedIn()) 
       {
         this.router.navigate(['login']);
         return false;
       }
+      
+      return true;
 
   }
   

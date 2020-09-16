@@ -31,6 +31,9 @@ export class StartTripComponent implements OnInit {
       employee_id: new FormControl(),
       itemRows: this.fb.array([this.initItemRows()]),
     });
+
+    // const toSelect = this.getCurrency();
+    // this.tripform.get('itemRows').setValue(toSelect[0]);
   }  
 
   ngOnInit(): void {
