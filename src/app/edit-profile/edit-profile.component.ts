@@ -61,7 +61,7 @@ export class EditProfileComponent implements OnInit {
   
 
   ngOnInit(): void {
-    this.http.get<any>('http://15.207.181.67:3000/admin/users?nonAdminUsers=false').subscribe(res => {
+    this.http.get<any>('https://api.plint.in/admin/users?nonAdminUsers=false').subscribe(res => {
       this.items = res.data;
       for (var index in res.data) 
       {

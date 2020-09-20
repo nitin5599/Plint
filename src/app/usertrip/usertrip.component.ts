@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 
 export class UsertripComponent implements OnInit {
 
-  Url: string = 'http://15.207.181.67:3000';
+  Url: string = 'https://api.plint.in/';
   headers = new HttpHeaders().set('Content-Type', 'application/json')
   .append('Authorization', 'Bearer ' + window.sessionStorage.getItem('access_token'));
     
@@ -30,7 +30,7 @@ export class UsertripComponent implements OnInit {
   }
 
   getData(){
-    this.http.get<any>('http://15.207.181.67:3000/admin/users?emUsersOnly=true&nonAdminUsers=false').subscribe(res => {
+    this.http.get<any>('https://api.plint.in/admin/users?emUsersOnly=true&nonAdminUsers=false').subscribe(res => {
       this.items = res.data;
       // console.log(this.items);
     });  

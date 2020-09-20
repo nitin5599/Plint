@@ -22,6 +22,8 @@ export class StartTripComponent implements OnInit {
   user_id: String;
   data: any;
   tripform: FormGroup;
+  value: String;
+  place: String;
 
   constructor(public userservice: UsercrudService,private toastr: ToastrService,private loc: Location,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
   { 
@@ -41,6 +43,20 @@ export class StartTripComponent implements OnInit {
     this.getCurrency();
   }
 
+  onEnter(val: string) 
+  {
+    // console.log(val)
+    this.value = val; 
+    if(this.value == 'USD')
+    {
+    this.place = 'INR to USD Conversion Rate';
+    }
+    else
+    {
+    this.place = 'USD to Local Currency Conversion Rate';
+    }
+  }
+
 showsubmit() 
 {
   this.toastr.success('submitted successfully!');
@@ -48,8 +64,9 @@ showsubmit()
 
 getCurrency()
 {
-  this.http.get<any>('http://15.207.181.67:3000/em/currencies').subscribe(res => {
+  this.http.get<any>('https://api.plint.in/em/currencies').subscribe(res => {
     this.currency = res.data;
+    console.log(res)
     });  
 }
 

@@ -15,7 +15,7 @@ import {MatDialog, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dia
 })
 export class SingleusertripComponent implements OnInit {
 
-  Url: string = 'http://15.207.181.67:3000';
+  Url: string = 'https://api.plint.in';
   headers = new HttpHeaders().set('Content-Type', 'application/json')
   .append('Authorization', 'Bearer ' + window.sessionStorage.getItem('access_token'));
   
