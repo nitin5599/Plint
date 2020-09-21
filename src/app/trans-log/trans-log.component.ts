@@ -15,6 +15,10 @@ export class TransLogComponent implements OnInit {
   .append('Authorization', 'Bearer ' + window.sessionStorage.getItem('access_token'));
     
   items: Array<any>;
+  // displayedColumns: string[] = ['Message'];
+  
+  TotalRecords: String;
+  Page: Number = 1;
 
   constructor(private actRoute: ActivatedRoute,private http: HttpClient,) 
   { }
@@ -24,8 +28,9 @@ export class TransLogComponent implements OnInit {
   }
 
   getData(){
-    this.http.get<any>('https://api.plint.in/admin/logs?numDays=3').subscribe(res => {
+    this.http.get<any>('https://api.plint.in/admin/logs?numDays=3&skip=0&limit=10').subscribe(res => {
       this.items = res.data;
+      this.TotalRecords = res.length;
     });  
   }
 

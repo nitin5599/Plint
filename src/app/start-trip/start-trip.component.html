@@ -27,7 +27,7 @@
                                   <mat-label>Currencies</mat-label>
                                   <mat-select (selectionChange)="onEnter($event.value)" formControlName="currency">
                                     <mat-option  *ngFor="let curr of currency" [value]="curr.identifier">
-                                      {{curr.identifier}}
+                                        {{curr.name}} ({{curr.identifier}})
                                     </mat-option>
                                   </mat-select>
                                 </mat-form-field>

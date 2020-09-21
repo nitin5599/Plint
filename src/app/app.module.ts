@@ -32,9 +32,6 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkTableModule} from '@angular/cdk/table';
 import { ChartsModule } from 'ng2-charts';
-import { TransLogComponent } from './trans-log/trans-log.component';
-import { UserslistComponent } from './userslist/userslist.component';
-import { BackComponent } from './back/back.component';
 
 @NgModule({
   imports: [
@@ -69,10 +66,6 @@ import { BackComponent } from './back/back.component';
     AdminLayoutComponent,
     SingleusertripComponent,
     SingleTransComponent,
-    // TransLogComponent,
-    // BackComponent,
-    // UserslistComponent,
-    // AddcurrencyComponent,
 
   ],
   providers: [

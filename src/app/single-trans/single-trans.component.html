@@ -90,6 +90,7 @@
                         <th>Source Holding</th>
                         <th>Converted Holding</th>
                         <th>Conversion Rate</th>
+                        <th>Receipt Url</th>
                         <th>Remarks</th>
                         <th>Status</th>
                     </thead>
@@ -102,6 +103,31 @@
                             <td>{{data.source_holding.amount}} {{data.source_holding.currency}}</td>
                             <td>{{data.converted_holding.amount}} {{data.converted_holding.currency}}</td> 
                             <td>{{data.rate_of_conversion}}</td> 
+                            <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
+                            <td *ngIf="data.receipt_image_url">
+                                <div class="example-button-row">
+                                <button mat-raised-button color="primary" data-toggle="modal" data-target="#basicExample">View</button>
+                                </div>
+
+<div id="basicExample" class="modal fade left"  tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body ">
+                <img  class="h-100 w-100 img-responsive" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+                            </td>
                             <td>{{data.remarks}}</td>
                             <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
                             <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary" (click)="isVerify(data._id)">Verify</button></td>
@@ -137,6 +163,7 @@
                         <th>Total Expense</th>
                         <th>Work Expense</th>
                         <th>Personal Expense</th>
+                        <th>Receipt Url</th>
                         <th>Remarks</th>
                         <th>Status</th>
                     </thead>
@@ -150,6 +177,31 @@
                             <td>{{data.total_expense.amount}} {{data.total_expense.currency}}</td>
                             <td>{{data.work_expense.amount}} {{data.work_expense.currency}}</td> 
                             <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
+                            <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
+                            <td *ngIf="data.receipt_image_url">
+                                <div class="example-button-row">
+                                <button mat-raised-button color="primary" data-toggle="modal" data-target="#basicExample">View</button>
+                                </div>
+
+<div id="basicExample" class="modal fade left"  tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body ">
+                <img  class="h-100 w-100 img-responsive" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+                            </td>
                             <td>{{data.remarks}}</td>
                             <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
                             <td *ngIf="data.is_verified == false"><button (click)="isVerify(data._id)" mat-raised-button color="primary">Verify</button></td>
@@ -181,6 +233,7 @@
                         <th>Total Expense</th>
                         <th>Work Expense</th>
                         <th>Personal Expense</th>
+                        <th>Receipt Url</th>
                         <th>Remarks</th>
                         <th>Status</th>
                     </thead>
@@ -193,6 +246,31 @@
                             <td>{{data.total_expense.amount}} {{data.total_expense.currency}}</td>
                             <td>{{data.work_expense.amount}} {{data.work_expense.currency}}</td> 
                             <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
+                            <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
+                            <td *ngIf="data.receipt_image_url">
+                                <div class="example-button-row">
+                                <button mat-raised-button color="primary" data-toggle="modal" data-target="#basicExample">View</button>
+                                </div>
+
+<div id="basicExample" class="modal fade left"  tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body ">
+                <img  class="h-100 w-100 img-responsive" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+                            </td>
                             <td>{{data.remarks}}</td>
                             <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
                             <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary">Verify</button></td>
@@ -221,8 +299,8 @@
                     <thead class=" text-black">
                         <th>Receipt ID</th>
                         <th>Amount</th>
-                        <th>Receipt Url</th>
                         <th>Conversion Rate</th>
+                        <th>Receipt Url</th>
                         <th>Remarks</th>
                         <th>Status</th>
                     </thead>
@@ -233,24 +311,34 @@
                         totalItems: TotalRecords }; let i = index">
                             <td>{{data.receipt_id}}</td> 
                             <td>{{data.client_reimbursement_amount.amount}} {{data.client_reimbursement_amount.currency}}</td>
-                            <!-- <td>
-                                <img style="height: 100%;width:100%;" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
-                            </td> -->
+                            <td>{{data.rate_of_conversion}}</td>
+                            <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
                             <td *ngIf="data.receipt_image_url">
                                 <div class="example-button-row">
-                                <button mat-raised-button color="primary"  (click) = "show()">View</button>
+                                <button mat-raised-button color="primary" data-toggle="modal" data-target="#basicExample">View</button>
                                 </div>
-                                <div *ngIf="this.showModal == true" class="mt-2" style="height: 100%;width:100%;background-color: green;">
-                                    <button type="button" class="close" aria-label="Close" (click) = "hide()">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                       <p style="color: honeydew;">image</p>
-                                </div>
+
+<div id="basicExample" class="modal fade left"  tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body ">
+                <img  class="h-100 w-100 img-responsive" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
                             </td>
-                            <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
-                            <td>{{data.rate_of_conversion}}</td>
                             <td>{{data.remarks}}</td> 
-                            <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
+                            <td style="color: green;" *ngIf="data.is_verified == true">Transaction Verified</td>
                             <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary">Verify</button></td>
                         </tr>
                     </tbody>

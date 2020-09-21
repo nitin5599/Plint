@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import {MatTableModule} from '@angular/material/table';
 import { CdkTableModule} from '@angular/cdk/table';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatRippleModule} from '@angular/material/core';
@@ -41,7 +41,8 @@ import { TransLogComponent } from '../../trans-log/trans-log.component';
     MatRadioModule,
     MatIconModule,
     MatTableModule,
-    CdkTableModule
+    CdkTableModule,
+    NgxPaginationModule
     // MatPaginatorModule
   ],
   declarations: [

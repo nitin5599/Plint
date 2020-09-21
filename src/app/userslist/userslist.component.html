@@ -27,10 +27,11 @@
                                     <td>{{data.email}}</td>
                                     <td>{{data.role}}</td>
                                     <td>{{data.is_expense_manager_user}}</td>
-                                    <td>
-                                      <button mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/edit-profile/', data._id, i]" class="btn btn-Success ">Edit</button>
+                                    <td class=" ">
+                                      <button  mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/edit-profile/', data._id, i]" class="btn btn-Success ">Edit</button>
+                                      <button mat-raised-button type="submit"  class="btn btn-danger pull-right" (click)="deluser(data._id)">Delete</button>
                                     </td>
-                                    <td><button mat-raised-button type="submit"  class="btn btn-danger pull-right" (click)="deluser(data._id)">Delete</button></td>
+                                    <!-- <td><button mat-raised-button type="submit"  class="btn btn-danger pull-right" (click)="deluser(data._id)">Delete</button></td> -->
                                    
                                   </tr>
                             </tbody>

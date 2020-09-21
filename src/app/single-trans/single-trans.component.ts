@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog, MatDialogConfig, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
@@ -102,7 +103,7 @@ export class SingleTransComponent implements OnInit {
   currLength: any;
   avgLength: any;
   
-  constructor(private http: HttpClient, private toastr: ToastrService, private location: Location, private router: Router, private actRoute: ActivatedRoute,private modalService: NgbModal, private sanitizer: DomSanitizer) { 
+  constructor(private http: HttpClient, private toastr: ToastrService, public dialog: MatDialog, private location: Location, private router: Router, private actRoute: ActivatedRoute,private modalService: NgbModal, private sanitizer: DomSanitizer) { 
     this.user_id = this.actRoute.snapshot.params.user_id;
     this.trip_id = this.actRoute.snapshot.params.trip_id;
     this.ongoing = this.actRoute.snapshot.params.state;

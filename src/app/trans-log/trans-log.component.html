@@ -15,12 +15,16 @@
                         <th>Message</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of items">
+                        <tr *ngFor="let data of items | paginate: { id: 'logs',
+                        itemsPerPage: 10,
+                        currentPage: logsPage,
+                        totalItems: TotalRecords }; let i = index">
                             <td *ngIf="data.log_action == 'create'">{{data.message}}</td>
                             <td *ngIf="data.log_action == 'update'" style="font-weight: 400;background-color: rgb(255,235,238,1);">{{data.message}}</td>
                         </tr>
                     </tbody>
                 </table>
+                <pagination-controls id="logs" (pageChange)="logsPage = $event" maxSize="9" directionLinks="true"></pagination-controls>
     </div>
   </div>
 </div>
