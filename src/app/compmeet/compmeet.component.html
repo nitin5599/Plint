@@ -1,0 +1,79 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+        <app-back></app-back>
+        
+<div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div  class="card-header rounded mdc-elevation--z6 card-header">
+            <h4 class="card-title ">Meetings & Companies</h4>
+            <p class="card-category ">user's past performances info</p>
+        </div>
+        <div class="card-body rounded mdc-elevation--z6">
+            <div  class="table-responsive">
+                <table class="table">
+                    <thead class=" text-black">
+                        <th>Empcode</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th class="text-center">View Meetings</th>
+                        <th class="text-center">View All Companies</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of items">
+                            <td>{{data.employee_code}}</td>
+                            <td>{{data.name}}</td>
+                            <td>{{data.email}}</td>
+                            <td>{{data.role}}</td>
+                            <td class="text-center">
+                                <button mat-raised-button type="submit" color="primary" [routerLink]="['/view_meets/', data._id]">View</button>
+                            </td>
+                            <td class="text-center">
+                                <button mat-raised-button type="submit" color="primary" [routerLink]="['/view_compainies/', data._id]">View</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="card">
+        <div  class="card-header rounded mdc-elevation--z6 card-header">
+            <h4 class="card-title ">Companies</h4>
+            <p class="card-category ">company's past meetings info</p>
+        </div>
+        <div class="card-body rounded mdc-elevation--z6">
+            <div  class="table-responsive">
+                <table class="table">
+                    <thead class=" text-black">
+                        <th>Empcode</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </thead>
+                    <tbody>
+                        <tr [routerLink]="['/usertrip/', data._id]" *ngFor="let data of items">
+                            <td>{{data.employee_code}}</td>
+                            <td>{{data.name}}</td>
+                            <td>{{data.email}}</td>
+                            <td>{{data.role}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
+  </div>
+</div>
+</div>
+</div> -->
+
+  
+
+</div>
+</div>

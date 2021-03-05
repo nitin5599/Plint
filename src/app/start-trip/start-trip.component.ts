@@ -6,12 +6,16 @@ import { UsercrudService } from '../services/usercrud.service';
 import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common'; 
 import { Subject } from 'rxjs';
+import { Pipe } from '@angular/core';
 
 @Component({
   selector: 'app-start-trip',
   templateUrl: './start-trip.component.html',
   styleUrls: ['./start-trip.component.css']
 })
+
+@Pipe({ name: 'sortBy' })
+
 export class StartTripComponent implements OnInit {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json')  
@@ -25,6 +29,7 @@ export class StartTripComponent implements OnInit {
   value: String;
   place: String;
 
+
   constructor(public userservice: UsercrudService,private toastr: ToastrService,private loc: Location,private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
   { 
     this.emp_id = this.actRoute.snapshot.params._id;
@@ -34,8 +39,6 @@ export class StartTripComponent implements OnInit {
       itemRows: this.fb.array([this.initItemRows()]),
     });
 
-    // const toSelect = this.getCurrency();
-    // this.tripform.get('itemRows').setValue(toSelect[0]);
   }  
 
   ngOnInit(): void {
@@ -57,7 +60,7 @@ export class StartTripComponent implements OnInit {
     }
   }
 
-showsubmit() 
+showSubmit() 
 {
   this.toastr.success('submitted successfully!');
 }
@@ -110,7 +113,7 @@ if(this.tripform.valid)
              "holding":
             {
              "currency":this.tripform.value.itemRows[i].currency,
-             "amount":usdamount
+             "amount":(1/usdamount) 
             },
            "inr_to_usd_conversion_rate":usdrate
           }
@@ -137,7 +140,7 @@ if(this.tripform.valid)
 this.userservice.userStartTrip(this.emp_id, starting_balance)
   .subscribe((res) =>{
       console.log(res)
-      this.showsubmit();
+      this.showSubmit();
       this.reset(); 
       this.router.navigateByUrl('/usertrips');
    });

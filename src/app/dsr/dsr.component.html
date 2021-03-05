@@ -1,0 +1,311 @@
+           
+<div class="main-content">
+<div class="container-fluid">
+   
+    <i class="fa fa-arrow-left" (click)="goBack()" aria-hidden="true"></i>
+    
+    <p>{{currUser_name}}</p>
+    
+    <form [formGroup]="rangeFormGroup" (ngSubmit)="onFormSubmit()">
+        <div class="mt-5 mb-5">
+
+            <mat-form-field  class="col-3" appearance="fill">
+                <mat-label>Enter a start date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="start">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+              
+            <mat-form-field class="col-3" appearance="fill">
+                <mat-label>Enter a end date</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="end">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <div class="row col-md-12">
+                <div *ngIf="sheet!==''" class="col-md-6">
+                    <a mat-raised-button  color="warn"  href="{{sheet}}">Download</a>
+                </div>
+                <div *ngIf="sheet==''" class="col-md-6">
+                    <button type="submit" mat-raised-button class="ml-3" color="primary" >Generate</button>
+                </div>
+            </div>           
+            
+        </div>
+    </form>
+    <mat-tab-group  mat-align-tabs="center" animationDuration="0ms">
+
+        <mat-tab label="Stats">
+          
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card  ">
+
+                        <div class="card-header rounded mdc-elevation--z6 card-header">
+                            <h4 class="card-title text-black">Most Meetings with Unique Clients</h4>
+                        </div>
+                        
+                        <div class="card-body rounded mdc-elevation--z8">
+                            <div class="chart-wrapper">                                
+                                
+                                <canvas *ngIf = "mostuniqueClientsData.length > 0" 
+                                baseChart 
+                                [datasets]="mostuniqueClientsData"
+                                [labels]="mostuniqueClients"
+                                [options]="barChartOptions"
+                                [plugins]="barChartPlugins"
+                                [legend]="barChartLegend"
+                                [chartType]="barChartType">
+                              </canvas>
+
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card  ">
+
+                        <div class="card-header rounded mdc-elevation--z6 card-header">
+                            <h4 class="card-title text-black">Average Meetings per week in Current Month</h4>
+                        </div>
+                        
+                        <div class="card-body rounded mdc-elevation--z8">
+                            <div class="chart-wrapper">                                
+                                
+                                <canvas *ngIf = "perweekData.length > 0" 
+                                baseChart 
+                                [datasets]="perweekData"
+                                [labels]="perweek"
+                                [options]="barChartOptions"
+                                [plugins]="barChartPlugins"
+                                [legend]="barChartLegend"
+                                [chartType]="barChartType">
+                              </canvas>
+
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card  ">
+
+                        <div class="card-header rounded mdc-elevation--z6 card-header">
+                            <h4 class="card-title text-black">Top Meetings in Current Month (including repeat meetings)</h4>
+                        </div>
+                        
+                        <div class="card-body rounded mdc-elevation--z8">
+                            <div class="chart-wrapper">                                
+                                
+                                <canvas *ngIf = "currmonthData.length > 0" 
+                                baseChart 
+                                [datasets]="currmonthData"
+                                [labels]="currmonth"
+                                [options]="barChartOptions"
+                                [plugins]="barChartPlugins"
+                                [legend]="barChartLegend"
+                                [chartType]="barChartType">
+                              </canvas>
+
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card  ">
+
+                        <div class="card-header rounded mdc-elevation--z6 card-header">
+                            <h4 class="card-title text-black">Top Quotations by Employees</h4>
+                        </div>
+                        
+                        <div class="card-body rounded mdc-elevation--z8">
+                            <div class="chart-wrapper">                                
+                                
+                                <canvas *ngIf = "topqoutationData.length > 0" 
+                                baseChart 
+                                [datasets]="topqoutationData"
+                                [labels]="topqoutation"
+                                [options]="barChartOptions"
+                                [plugins]="barChartPlugins"
+                                [legend]="barChartLegend"
+                                [chartType]="barChartType">
+                              </canvas>
+
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+
+        </mat-tab>
+      
+        <mat-tab label="Customers">
+                
+                <div class="row mt-5 mb-0">
+                    <div class="col-md-3 form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Location</mat-label>
+                        <select matNativeControl (change)="changeLoc($event.target.value); " >
+                        <option value="{{data.area}}" *ngFor="let data of locations; let i = index;">{{data.area}}</option>
+                        <option value="">All Locations</option>
+                        </select>
+                    </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row" >
+
+                <div *ngFor="let data of cust; let i = index;">                       
+                    <mat-card *ngIf = "(this.current_loc==data.location.area)||(this.current_loc=='')" class="example-card mr-5 mb-5 rounded mdc-elevation--z6">
+                        <mat-card-header>
+                          <mat-card-title>{{data.company_name}}</mat-card-title>
+                        </mat-card-header>
+                        <mat-list role="list">
+                            <mat-list-item role="listitem">Name : {{data.default_person_met.name}}</mat-list-item> 
+                            <mat-list-item role="listitem">Designation : {{data.default_person_met.designation}}</mat-list-item>
+                            <mat-list-item role="listitem">Email : {{data.default_person_met.email}}</mat-list-item>
+                            <mat-list-item role="listitem">mobile : {{data.default_person_met.mobile}}</mat-list-item>  
+                            <mat-list-item role="listitem">Company Address : {{data.company_address}}</mat-list-item> 
+                            <mat-list-item role="listitem">Location : {{data.location.type}}, {{data.location.area}}</mat-list-item>
+                            <mat-list-item role="listitem">Reference : {{data.reference}}</mat-list-item>
+                        </mat-list>
+                    </mat-card>
+                </div>
+            
+                </div>
+
+        </mat-tab>
+      
+        <mat-tab label="Meetings">
+      
+            <div class="row mt-5 mb-0">
+                <div class="col-md-3 form-group">
+                <mat-form-field appearance="fill">
+                    <mat-label>Days</mat-label>
+                    <select matNativeControl (change)="changeDays($event.target.value); " >
+                    <option value="1">1 Day</option>
+                    <option value="3">3 Days</option>
+                    <option value="7">7 Days</option>
+                    <option value="15">15 Days</option>
+                    <option value="30">1 month</option>
+                    <option value="180">6 months</option>
+                    <option value="365">1 year</option>
+                    </select>
+                </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row" >
+
+                <div class="mt-4 mb-4" *ngFor="let data of meetings; let i = index;">
+                    <mat-card *ngIf="meetings.length > 0" class="example-card mr-5 mb-5 rounded mdc-elevation--z6">
+                        <mat-card-header class="text-center">
+                          <mat-card-title class="text-center">{{data.company_name}}</mat-card-title>
+                        </mat-card-header>
+                        <h4><b>Name : </b>{{data.person_met.name}}</h4>
+                        <h4><b>Designation : </b>{{data.person_met.designation}}</h4>
+                        <h4><b>Email : </b>{{data.person_met.email}}</h4>
+                        <h4><b>mobile : </b>{{data.person_met.mobile}}</h4>
+                        <h4><b>Image : </b>
+                            <img src="{{data.photo_url}}" id="imagepreview" style="width: 100px; height: 100px;margin-top: 20px;margin-bottom: 20px;" >
+                        </h4>
+                        <h4><b>Meeting Details : </b>{{data.meeting_details}}</h4>
+                        <h4><b>Added on : </b>{{data.timestamp | date:'d/M/yy, h:mm a'}}</h4>
+                        <h4><b>Follow up date : </b>{{data.follow_up_date | date:'d/M/yy, h:mm a'}}</h4>
+                        <h4><b>Quotations : </b>{{data.no_of_quotations}}</h4>
+                        <h4><b>Location : </b>{{data.location.type}}, {{data.location.area}}</h4>
+                    </mat-card>
+                </div>
+
+                <!-- <div *ngFor="let data of meetings; let i = index;">                       
+                    <mat-card *ngIf="meetings.length > 0" class="example-card mr-5 mb-5 rounded mdc-elevation--z6">
+                        <mat-card-header>
+                          <mat-card-title>{{data.company_name}}</mat-card-title>
+                        </mat-card-header>
+                        <mat-list role="list">
+                            <mat-list-item role="listitem">Name : {{data.person_met.name}}</mat-list-item> 
+                            <mat-list-item role="listitem">Designation : {{data.person_met.designation}}</mat-list-item>
+                            <mat-list-item role="listitem">Email : {{data.person_met.email}}</mat-list-item>
+                            <mat-list-item role="listitem">mobile : {{data.person_met.mobile}}</mat-list-item><br>
+                            <mat-list-item class="mt-4 mb-5" role="listitem">Image :&nbsp;  
+                                <img src="{{data.photo_url}}" id="imagepreview" style="width: 100px; height: 100px;margin-bottom: 50px;" >
+                            </mat-list-item>
+                            <mat-list-item role="listitem">Meeting Details : {{data.meeting_details}}</mat-list-item><br> 
+                            <mat-list-item role="listitem">Quotations : {{data.no_of_quotations}}</mat-list-item>
+                            <mat-list-item role="listitem">Location : {{data.location.type}}, {{data.location.area}}</mat-list-item>
+                        </mat-list>
+                    </mat-card>
+                </div> -->
+            
+            </div>
+      
+        </mat-tab>
+      
+        <mat-tab label="Alerts">
+
+            <div class="row mt-5 mb-0">
+                <div class="col-md-3 form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Days</mat-label>
+                        <select matNativeControl (change)="changeAlertDays($event.target.value); " >
+                        <option value="1">1 Day</option>
+                        <option value="3">3 Days</option>
+                        <option value="7">7 Days</option>
+                        <option value="15">15 Days</option>
+                        <option value="30">1 month</option>
+                        <option value="180">6 months</option>
+                        <option value="365">1 year</option>
+                        </select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row" >
+
+                <div *ngFor="let data of alerts; let i = index;">                       
+                    <mat-card *ngIf="alerts.length > 0" class="example-card mr-5 mb-5 rounded mdc-elevation--z6">
+                        <mat-card-header>
+                          <mat-card-title>{{data.company_name}}</mat-card-title>
+                        </mat-card-header>
+                        <mat-list role="list">
+                            <mat-list-item role="listitem">Name : {{data.person_met.name}}</mat-list-item> 
+                            <mat-list-item role="listitem">Designation : {{data.person_met.designation}}</mat-list-item>
+                            <mat-list-item role="listitem">Email : {{data.person_met.email}}</mat-list-item>
+                            <mat-list-item role="listitem">mobile : {{data.person_met.mobile}}</mat-list-item><br>
+                            <mat-list-item role="listitem">Image :&nbsp;  
+                                <img src="{{data.photo_url}}" id="imagepreview" style="width: 100px; height: 100px;" >
+                            </mat-list-item><br>  
+                            <mat-list-item role="listitem">Quotations : {{data.no_of_quotations}}</mat-list-item>
+                            <mat-list-item role="listitem" style="background-color: lightblue;">Follow up date : {{data.follow_up_date}}</mat-list-item>
+                            <mat-list-item role="listitem">Location : {{data.location.type}}, {{data.location.area}}</mat-list-item>
+                        </mat-list>
+                    </mat-card>
+                </div>
+            
+            </div>
+
+        </mat-tab>
+    
+    </mat-tab-group>
+    
+    
+
+
+
+</div>
+</div>
+
+

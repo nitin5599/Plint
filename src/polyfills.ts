@@ -41,7 +41,7 @@ import 'core-js/es/set';
 import 'classlist.js';  // Run `npm install --save classlist.js`.
 
 /** IE10 and IE11 requires the following to support `@angular/animation`. */
-import 'web-animations-js';  // Run `npm install --save webå-animations-js`.
+// import 'web-animations-js';  // Run `npm install --save webå-animations-js`.
 
 
 /** Evergreen browsers require these. **/
@@ -64,7 +64,7 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-
+// (window as any).global = window;
 /**
  * Date, currency, decimal and percent pipes.
  * Needed for: All but Chrome, Firefox, Edge, IE11 and Safari 10

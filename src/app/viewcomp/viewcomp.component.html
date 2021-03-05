@@ -1,0 +1,52 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+        <app-back></app-back>
+        
+<div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div  class="card-header rounded mdc-elevation--z6 card-header">
+            <h4 class="card-title ">User's Compainies</h4>
+            <p class="card-category ">past compainies meetings info</p>
+        </div>
+        <div class="card-body rounded mdc-elevation--z6">
+            <div  class="table-responsive">
+                <table class="table">
+                    <thead class=" text-black">
+                        <th>Company Name</th>
+                        <th colspan="4" class=" text-center">Person met</th>
+                        <th colspan="2" class=" text-center">Location</th>
+                        <th class="">Address</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <th>Name</th>
+                            <th>Designation</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Type</th>
+                            <th>Area</th>
+                            <td></td>
+                        </tr>
+                        <tr   *ngFor="let data of items; let i = index;">
+                            <td>{{data.company_name}}</td>
+                            <td>{{data.default_person_met.name}}</td>
+                            <td>{{data.default_person_met.designation}}</td>    
+                            <td>{{data.default_person_met.email}}</td>
+                            <td>{{data.default_person_met.mobile}}</td>
+                            <td>{{data.location.type}}</td>
+                            <td>{{data.location.area}}</td>
+                            <td>{{data.company_address}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+</div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {MatPaginator} from '@angular/material/paginator';
@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ChartType, ChartOptions, ChartLegendLabelOptions } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';
+import { NgxImgZoomService } from "ngx-img-zoom";
 
 @Component({
   selector: 'app-single-trans',
@@ -42,6 +43,7 @@ export class SingleTransComponent implements OnInit {
     responsive: true,
     maintainAspectRatio:false,
     legend:{
+      display: false,
       position: 'right'
     },
     
@@ -56,23 +58,16 @@ export class SingleTransComponent implements OnInit {
           borderWidth: 0
       }
   },
-    // segmentShowStroke: false,
     tooltips: {
       
       enabled: false
     },
     legend: {
-      // display: true,
-      // position: 'right'
+      display: true,
     },
-    // title:{
-    //   text:"No Transactions Yet",
-    //   position: "bottom",
-      // display: true
-    // }
     
   };
-
+e;
   public currentLabels: Label[] = [];
   public currentData: SingleDataSet = [];
   public todayLabels: Label[] = [];
@@ -80,7 +75,6 @@ export class SingleTransComponent implements OnInit {
   public avgLabels: Label[] = [];
   public avgData: SingleDataSet = [];
 
-  // public empty: Label[] = ['NO TRANSACTIONS']; 
   public emptydata: SingleDataSet = [100];
 
   
@@ -103,23 +97,70 @@ export class SingleTransComponent implements OnInit {
   currLength: any;
   avgLength: any;
   
+  image:any;
+
   constructor(private http: HttpClient, private toastr: ToastrService, public dialog: MatDialog, private location: Location, private router: Router, private actRoute: ActivatedRoute,private modalService: NgbModal, private sanitizer: DomSanitizer) { 
     this.user_id = this.actRoute.snapshot.params.user_id;
     this.trip_id = this.actRoute.snapshot.params.trip_id;
     this.ongoing = this.actRoute.snapshot.params.state;
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
+
   }
 
   ngOnInit(): void {
-   this.curr_trans();
-   this.exptrans();
-   this.client_re_trans();
-   this.client_trans();
+
+    this.curr_trans();
+     this.exptrans();
+     this.client_re_trans();
+     this.client_trans();
+
    this.CurrentExpenses();
    this.todayExpenses();
    this.avgExpenses();
-  } 
+  }
+
+  changeSuit(e) {
+
+    let api = this.Url+'/em/user/'+this.user_id+'/trip/'+this.trip_id+'/transaction/list?skip=0&limit=100&sortBy=created_on&sortOrder=desc&';
+    
+    let API_URL = api+'type=currency_conversion&v='+e;
+    this.http.get<any>(`${API_URL}`)
+
+    .subscribe((res: any) => {
+      // console.log(res.data)
+      this.items = res.data;
+      this.TotalRecords = res.length;
+    });
+  
+    let API_URL1 = api+'type=expense&v='+e;
+    this.http.get<any>(`${API_URL1}`)
+
+    .subscribe((res1: any) => {
+      // console.log(res1.data)
+      this.expitems = res1.data;
+      this.TotalRecords = res1.length;
+    });
+
+    let API_URL2 = api+'&type=reimbursement&v='+e;
+    this.http.get<any>(`${API_URL2}`)
+
+    .subscribe((res2: any) => {
+      // console.log(res2.data)
+      this.cli_items = res2.data;
+      this.TotalRecords = res2.length;
+    });
+
+    let API_URL3 = api+'type=client_reimbursement&v='+e;
+    this.http.get<any>(`${API_URL3}`)
+
+    .subscribe((res3: any) => {
+      // console.log(res3.data)
+      this.re_items = res3.data;
+      this.TotalRecords = res3.length;
+    });
+
+  }
 
   goBack() {
     this.location.back();
@@ -149,8 +190,10 @@ export class SingleTransComponent implements OnInit {
     this.http.get<any>(`${API_URL}`)
 
     .subscribe((res: any) => {
-      // console.log(res.data)
+      console.log(res)
+      // console.log(res.data.receipt_image_file_id)
       this.expitems = res.data;
+      // console.log(this.expitems.receipt_image_file_id)
       this.TotalRecords = res.length;
     });
   }
@@ -284,6 +327,12 @@ avgExpenses()
     }
    });
 }
+
+showimage(imghref,display)
+{
+  this.image = imghref;
+  this.showModal = true;
+}
   show()
   {
     this.showModal = true; // Show-Hide Modal Check
@@ -297,6 +346,10 @@ avgExpenses()
 
   }
 
+  public ngOnDestroy() : void {
+
+  }
+  
 }
 
 

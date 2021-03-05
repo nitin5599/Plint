@@ -25,23 +25,23 @@
                             <div  class="col-sm-3 form-group" >
                                 <mat-form-field appearance="fill">
                                   <mat-label>Currencies</mat-label>
-                                  <mat-select (selectionChange)="onEnter($event.value)" formControlName="currency">
-                                    <mat-option  *ngFor="let curr of currency" [value]="curr.identifier">
+                                  <mat-select  (selectionChange)="onEnter($event.value)" formControlName="currency">
+                                    <mat-option  *ngFor="let curr of currency | sortBy: 'asc':'name' " [value]="curr.identifier">
                                         {{curr.name}} ({{curr.identifier}})
                                     </mat-option>
                                   </mat-select>
                                 </mat-form-field>
                             </div>
                             
-                            <div  *ngIf="this.tripform.value.itemRows[i].currency == 'USD' " class="col-sm-3 form-group" >
+                            <div  *ngIf="this.tripform.value.itemRows[i].currency !== 'USD' " class="col-sm-3 form-group" >
                                 <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="INR to USD Conversion Rate" type="text" formControlName="rate" >
+                                  <input matInput placeholder="USD to {{this.value}} Conversion Rate" type="text" formControlName="rate" >
                                 </mat-form-field>
                             </div>
 
-                            <div  *ngIf="this.tripform.value.itemRows[i].currency !== 'USD' " class="col-sm-3 form-group" >
+                            <div  *ngIf="this.tripform.value.itemRows[i].currency == 'USD' " class="col-sm-3 form-group" >
                                 <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="{{this.place}}" type="text" formControlName="rate" >
+                                  <input matInput placeholder="USD to INR Conversion Rate" type="text" formControlName="rate" >
                                 </mat-form-field>
                             </div>
 

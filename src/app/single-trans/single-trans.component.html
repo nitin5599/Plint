@@ -73,9 +73,23 @@
 
     </div>
 
+    <div class="row mt-5 mb-0">
+      <div class="col-md-3 form-group">
+        <mat-form-field appearance="fill">
+          <mat-label>List</mat-label>
+          <select matNativeControl (change)="changeSuit($event.target.value); " >
+            <option value="">View All</option>
+            <option value="verified">View Verified only</option>
+            <option value="unverified">View non-verfiy only</option>
+          </select>
+        </mat-form-field>
+        <!-- <button (click)="changeSuit($event)" mat-raised-button>CALL</button> -->
+      </div>
+    </div>
+
   <!-- currency conversion transaction -->
 
-  <div class="row mt-5">
+  <div class="row mt-3">
     <div class="col-md-12">
       <div class="card">
         <div  class="card-header rounded mdc-elevation--z6 card-header">
@@ -92,9 +106,10 @@
                         <th>Conversion Rate</th>
                         <th>Receipt Url</th>
                         <th>Remarks</th>
+                        <th>Created At</th>
                         <th>Status</th>
                     </thead>
-                    <tbody>
+                    <tbody *ngIf="this.items" >
                         <tr *ngFor="let data of items | paginate: { id: 'curr_con',
                         itemsPerPage: 10,
                         currentPage: curr_Page,
@@ -105,30 +120,27 @@
                             <td>{{data.rate_of_conversion}}</td> 
                             <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
                             <td *ngIf="data.receipt_image_url">
-                                <div class="example-button-row">
-                                <button mat-raised-button color="primary" data-toggle="modal" data-target="#basicExample">View</button>
+                              <button mat-raised-button color="primary"  (click)="showimage(data.receipt_image_url,true)">View</button>
+                             
+                              <div [style.display]="showModal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <img src="{{image}}" id="imagepreview" style="width: 450px; height: 500px;" >
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" (click) = "hide()">Close</button>
+                                  </div>
                                 </div>
-
-<div id="basicExample" class="modal fade left"  tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-        <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <img  class="h-100 w-100 img-responsive" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
-            </div>
-        </div>
-
-    </div>
-  </div>
-</div>
+                              </div>
+                              </div>
 
                             </td>
                             <td>{{data.remarks}}</td>
+                            <td>{{data.created_on | date:'d/M/yy, h:mm a'}}</td>
                             <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
                             <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary" (click)="isVerify(data._id)">Verify</button></td>
                         </tr>
@@ -165,13 +177,14 @@
                         <th>Personal Expense</th>
                         <th>Receipt Url</th>
                         <th>Remarks</th>
+                        <th>Created At</th>
                         <th>Status</th>
                     </thead>
-                    <tbody>
+                    <tbody *ngIf="this.expitems">
                         <tr *ngFor="let data of expitems | paginate: { id: 'expense',
                         itemsPerPage: 10,
                         currentPage: expPage,
-                        totalItems: TotalRecords }">
+                        totalItems: TotalRecords }; let i = index;">
                             <td>{{data.receipt_id}}</td> 
                             <td>{{data.expense_type}}</td>
                             <td>{{data.total_expense.amount}} {{data.total_expense.currency}}</td>
@@ -179,32 +192,32 @@
                             <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
                             <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
                             <td *ngIf="data.receipt_image_url">
-                                <div class="example-button-row">
-                                <button mat-raised-button color="primary" data-toggle="modal" data-target="#basicExample">View</button>
+                             <button mat-raised-button color="primary"  (click)="showimage(data.receipt_image_url,true)">View</button>
+                             
+                              <div [style.display]="showModal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <img src="{{image}}" id="imagepreview" style="width: 450px; height: 500px;" >
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" (click) = "hide()">Close</button>
+                                  </div>
                                 </div>
-
-<div id="basicExample" class="modal fade left"  tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-        <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <img  class="h-100 w-100 img-responsive" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
-            </div>
-        </div>
-
-    </div>
-  </div>
-</div>
-
+                              </div>
+                              </div>
+                            
+                              <!-- <img style="width:100px;height: 125px;" class="img-responsive" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}"> -->
+                               
                             </td>
                             <td>{{data.remarks}}</td>
+                            <td>{{data.created_on | date:'d/M/yy, h:mm a'}}</td>
                             <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
                             <td *ngIf="data.is_verified == false"><button (click)="isVerify(data._id)" mat-raised-button color="primary">Verify</button></td>
+                            
                         </tr>
                     </tbody>
                 </table>
@@ -235,9 +248,10 @@
                         <th>Personal Expense</th>
                         <th>Receipt Url</th>
                         <th>Remarks</th>
+                        <th>Created At</th>
                         <th>Status</th>
                     </thead>
-                    <tbody>
+                    <tbody *ngIf="this.cli_items">
                         <tr *ngFor="let data of cli_items | paginate: { id: 'reimburse',
                         itemsPerPage: 10,
                         currentPage: reimbursePage,
@@ -248,30 +262,27 @@
                             <td>{{data.personal_expense.amount}} {{data.personal_expense.currency}}</td> 
                             <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
                             <td *ngIf="data.receipt_image_url">
-                                <div class="example-button-row">
-                                <button mat-raised-button color="primary" data-toggle="modal" data-target="#basicExample">View</button>
+                              <button mat-raised-button color="primary"  (click)="showimage(data.receipt_image_url,true)">View</button>
+                             
+                              <div [style.display]="showModal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <img src="{{image}}" id="imagepreview" style="width: 450px; height: 500px;" >
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" (click) = "hide()">Close</button>
+                                  </div>
                                 </div>
-
-<div id="basicExample" class="modal fade left"  tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-        <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <img  class="h-100 w-100 img-responsive" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
-            </div>
-        </div>
-
-    </div>
-  </div>
-</div>
+                              </div>
+                              </div>
 
                             </td>
                             <td>{{data.remarks}}</td>
+                            <td>{{data.created_on | date:'d/M/yy, h:mm a'}}</td>
                             <td style="color: green;" *ngIf="data.is_verified == true">Verified</td>
                             <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary">Verify</button></td>
                         </tr>
@@ -302,9 +313,10 @@
                         <th>Conversion Rate</th>
                         <th>Receipt Url</th>
                         <th>Remarks</th>
+                        <th>Created At</th>
                         <th>Status</th>
                     </thead>
-                    <tbody>
+                    <tbody *ngIf="this.re_items">
                         <tr *ngFor="let data of re_items | paginate: { id: 'client',
                         itemsPerPage: 10,
                         currentPage: clientPage,
@@ -314,30 +326,27 @@
                             <td>{{data.rate_of_conversion}}</td>
                             <td *ngIf="!(data.receipt_image_url)">No Receipt</td>
                             <td *ngIf="data.receipt_image_url">
-                                <div class="example-button-row">
-                                <button mat-raised-button color="primary" data-toggle="modal" data-target="#basicExample">View</button>
+                              <button mat-raised-button color="primary"  (click)="showimage(data.receipt_image_url,true)">View</button>
+                             
+                              <div [style.display]="showModal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <img src="{{image}}" id="imagepreview" style="width: 450px; height: 500px;" >
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" (click) = "hide()">Close</button>
+                                  </div>
                                 </div>
-
-<div id="basicExample" class="modal fade left"  tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-        <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <img  class="h-100 w-100 img-responsive" src="{{data.receipt_image_url}}" alt="{{data.receipt_image_file_id}}">
-            </div>
-        </div>
-
-    </div>
-  </div>
-</div>
+                              </div>
+                              </div>
 
                             </td>
-                            <td>{{data.remarks}}</td> 
+                            <td>{{data.remarks}}</td>
+                            <td>{{data.created_on | date:'d/M/yy, h:mm a'}}</td> 
                             <td style="color: green;" *ngIf="data.is_verified == true">Transaction Verified</td>
                             <td *ngIf="data.is_verified == false"><button mat-raised-button color="primary">Verify</button></td>
                         </tr>

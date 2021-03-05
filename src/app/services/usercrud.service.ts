@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 @Injectable({
   providedIn: 'root'
 })
+
 export class UsercrudService {
 
   Url: string = 'https://api.plint.in';
@@ -30,8 +31,13 @@ export class UsercrudService {
       window.sessionStorage.setItem('access_token', res.data.token_info.accessToken);
       this.isLogged = true;
         this.router.navigate(['/user-profile']);
-    })
-    
+    })    
+  }
+  
+  logout(){
+    window.sessionStorage.removeItem('access_token');
+    this.isLogged = false;
+    this.router.navigate(['/login']);
   }
 
   getToken() {
@@ -46,8 +52,7 @@ export class UsercrudService {
       map((data: any) => {
         return data;  
       })
-    )
-    
+    )    
   }
 
   updateUser(user, user_id): Observable<any> 
@@ -75,6 +80,15 @@ export class UsercrudService {
     return this.http.delete(`${API_URL}`, httpOptions);
   }
 
+  resetUser(user_id: String)
+  {
+    this.http.get<any>('https://api.plint.in/admin/users/'+user_id+'/reset').subscribe(res => {
+        // this.items = res.data;
+        console.log(res)
+    });  
+
+  }
+
    // Returns true when user is logged in 
    isLoggedIn(): boolean {
     const token = window.sessionStorage.getItem('access_token');
@@ -95,6 +109,20 @@ export class UsercrudService {
         return data;  
       })
     )
+
+  }
+
+  updateCompany(cmp: any[], user_id: String): Observable<any>
+  {   
+    const headers: HttpHeaders = new HttpHeaders()
+    .append('Authorization', 'Bearer ' + window.sessionStorage.getItem('access_token'));
+    
+    const httpOptions = {
+      headers: headers  
+    };
+    
+    let API_URL = `${this.Url}/dsr/companies`;
+    return this.http.put<any>(`${API_URL}/${user_id}`, cmp, httpOptions)
   }
 
 }

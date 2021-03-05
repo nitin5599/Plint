@@ -1,0 +1,16 @@
+/* @import "@material/elevation/mdc-elevation"; */
+
+.card-header{
+    background-color:#008080  ;
+}
+.card-title{
+    color: white;
+}
+.card-header .card-category {
+    color: white;
+}
+
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}

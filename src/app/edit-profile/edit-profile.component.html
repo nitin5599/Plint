@@ -28,29 +28,37 @@
                               <div class="col-md-4 form-group">
                                   <mat-form-field appearance="fill">
                                     <mat-label>Role</mat-label>
-                                    <mat-select formControlName="role" >
+                                    <mat-select (selectionChange)="onEnter($event.value)" formControlName="role" >
                                       <mat-option *ngFor="let rol of role" [value]="rol">
                                         {{rol}}
-                                      </mat-option>
+                                      </mat-option> 
                                     </mat-select>
                                   </mat-form-field>
-                             </div>
-  
-                            
-                             <div class="col-md-4 form-group">
+                              </div>
+
+                              <div *ngIf="(display == 'true')||(display == '')" class="col-md-4 form-group"> 
+                                <mat-form-field appearance="fill">
+                                  <mat-label>Manager Name</mat-label>
+                                  <mat-select formControlName="parent_user_id">
+                                    <mat-option *ngFor="let mn of parent_user_id" [value]="mn._id">
+                                      {{mn.name}}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-md-4 form-group">
                                   <mat-form-field class="example-full-width">
                                     <input matInput placeholder="Email" formControlName="email" type="text">
                                   </mat-form-field>
                               </div>
                             
                               <div class="col-md-4 form-group">
-                                  <mat-form-field appearance="fill">
-                                    <mat-label>Expense Manager</mat-label>
-                                    <mat-select formControlName="is_expense_manager_user" >
-                                      <mat-option [value]=true>True</mat-option>
-                                      <mat-option [value]=false>False</mat-option>
-                                    </mat-select>
-                                  </mat-form-field>
+                                <mat-label class="row  mb-3 ml-0">Will this user use the Expense Manager?</mat-label>
+                                <mat-radio-group class="row mb-3 ml-0" formControlName="is_expense_manager_user" aria-label="Expense Manager">
+                                  <mat-radio-button [value]=true>Yes</mat-radio-button>
+                                  <mat-radio-button [value]=false>No</mat-radio-button>
+                                </mat-radio-group>
                               </div>
                             
                               <div class="col-md-4 mt-3">

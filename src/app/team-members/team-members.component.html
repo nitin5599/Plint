@@ -1,0 +1,45 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+      <app-back></app-back>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div  class="card-header rounded mdc-elevation--z6 card-header">
+                    <h4 class="card-title ">Team Memebers</h4>
+                    <p class="card-category ">View your team members info</p>
+                </div>
+                <div class="card-body rounded mdc-elevation--z6">
+                    <div  class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-black">
+                                <th>Empcode</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>ExpenseManager</th>
+                                <!-- <th colspan="2" class="text-center mr-5">Action</th> -->
+                            </thead>
+                            <tbody>
+                                <tr   *ngFor="let data of items; let i = index;">
+                                    <td>{{data.employee_code}}</td>
+                                    <td>{{data.name}}</td>
+                                    <td>{{data.email}}</td>
+                                    <td>{{data.role}}</td>
+                                    <td>{{data.is_expense_manager_user}}</td>
+                                    <!-- <td class=" ">
+                                      <button  mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/edit-profile/', data._id, i]" class="btn btn-Success ">Edit</button>
+                                      <button mat-raised-button type="submit"  class="btn btn-danger pull-right" (click)="deluser(data._id)">Delete</button>
+                                    </td> -->
+                                    <!-- <td><button mat-raised-button type="submit"  class="btn btn-danger pull-right" (click)="deluser(data._id)">Delete</button></td> -->
+                                   
+                                  </tr>
+                            </tbody>
+                        </table>
+            </div>
+          </div>
+  
+    
+    </div>
+  </div>
+  

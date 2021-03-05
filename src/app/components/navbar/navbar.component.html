@@ -3,6 +3,9 @@
         <div class="navbar-wrapper">
           <a class="navbar-brand" href="javascript:void(0)"></a>
         </div>
+        <div class="col-md-4 mt-3 mb-3 text-right">
+            <button mat-raised-button color="primary" (click)="userservice.logout()" >Logout</button>
+        </div>
         <button mat-raised-button class="navbar-toggler" type="button" (click)="sidebarToggle()">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>

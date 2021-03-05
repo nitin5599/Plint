@@ -1,0 +1,115 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card  ">
+                    <div class="card-header rounded mdc-elevation--z6 card-header">
+                        <h4 class="card-title">Add Company</h4>
+                        <p class="card-category">Add new company</p>
+                    </div>
+                    <div class="card-body rounded mdc-elevation--z6">
+                        <form [formGroup]="compform" novalidate (ngSubmit)="onSubmit()">
+  
+                             <div class="col-md-4 form-group">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Company Name" type="text" formControlName="comp_name">
+                                </mat-form-field>
+                              </div>
+  
+                            <div class="row ml-0">
+                              
+                              <div class="col-md-4 form-group">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Name" type="text" formControlName="person_name">
+                                  </mat-form-field>
+                              </div>
+
+                              <div class="col-md-4 form-group">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Designation" type="text" formControlName="person_des">
+                                </mat-form-field>
+                              </div>
+
+                          </div>
+
+                          <div formArrayName="item_email" *ngFor="let item of compform.controls.item_email['controls']; let i = index">
+                          <div class="row ml-0" [formGroupName]="i">
+                          
+                             <div class="col-md-3 form-group">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Email" type="text" formControlName="person_email">
+                                  </mat-form-field>
+                              </div>
+
+                              <div class="col-sm-3 ">
+                                <button type="button" (click)="add_email()" class="btn btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                              </div>
+
+                              <div *ngIf="i" class="col-sm-3">
+                                <button  (click)="delete_email(i)" class="btn btn-danger"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                              </div>
+
+                          </div>
+                        </div>
+
+                        <div formArrayName="item_mob" *ngFor="let item of compform.controls.item_mob['controls']; let i = index">
+                          <div class="row ml-0" [formGroupName]="i">
+                          
+                             <div class="col-md-3 form-group">
+                               <mat-form-field class="example-full-width">
+                                 <input matInput placeholder="Phone" type="text" formControlName="person_mob">
+                               </mat-form-field>
+                             </div>
+
+                             <div class="col-sm-3 ">
+                               <button type="button" (click)="add_mob()" class="btn btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                             </div>
+
+                             <div *ngIf="i" class="col-sm-3">
+                              <button  (click)="delete_mob(i)" class="btn btn-danger"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                             </div>
+
+                         </div>
+                        </div>
+
+                              <div class="col-md-4 form-group">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Location Type" type="text" formControlName="loc_type">
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-md-4 form-group">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Location Area" type="text" formControlName="loc_area">
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-md-4 form-group">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Company Address" type="text" formControlName="addr">
+                                </mat-form-field>
+                              </div>
+
+                              <div class="col-md-4 form-group">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Reference" type="text" formControlName="refer">
+                                </mat-form-field>
+                              </div>
+                            
+                              <div class="col-md-4 mt-3 mb-3">
+                                <button mat-raised-button color="warn" type="submit" >SUBMIT</button>
+                              </div>
+  
+                            <div class="clearfix"></div>
+                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+    
+        
+    </div>
+  </div>
+  

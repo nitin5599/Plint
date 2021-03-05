@@ -1,0 +1,45 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+      <app-back></app-back>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div  class="card-header rounded mdc-elevation--z6 card-header">
+                    <h4 class="card-title ">Attendence List</h4>
+                    <p class="card-category ">About users attendence info</p>
+                </div>
+                <div class="card-body rounded mdc-elevation--z6">
+                    <div  class="table-responsive">
+                        <table class="table">
+                            <thead class="text-center text-black">
+                                <th>Date</th>
+                                <th>Day Start</th>
+                                <th>Day End</th>
+                                <th>Day start Location</th>
+                                <th>View start location data</th>
+                                <th>Day end Location</th>
+                                <th>View end location data</th>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr *ngFor="let data of att; let i = index;">
+                                    <td>{{data.date}}</td>
+                                    <td>{{data.day_start | date:'d/M/yy, h:mm a'}}</td>
+                                    <td>{{data.day_end | date:'d/M/yy, h:mm a'}}</td>
+                                    <td><a target="_blank" href="https://www.google.com/maps/search/?api=1&query={{data.day_start_location.latitude}},{{data.day_start_location.longitude}}">Address</a></td>
+                                    <td class="text-center">
+                                        <button mat-raised-button type="button" (click)="SlocDialog(data.day_start_location.address)" class="btn btn-primary">Location</button>
+                                    </td>
+                                    <td><a target="_blank" href="https://www.google.com/maps/search/?api=1&query={{data.day_end_location.latitude}},{{data.day_end_location.longitude}}">Address</a></td>
+                                    <td class=" ">
+                                        <button mat-raised-button type="button" (click)="ElocDialog(data.day_end_location.address)" class="btn btn-primary">Location</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+            </div>
+          </div>
+  
+    
+    </div>
+  </div>

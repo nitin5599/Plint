@@ -12,26 +12,45 @@
                 <div class="card-body rounded mdc-elevation--z6">
                     <div  class="table-responsive">
                         <table class="table">
-                            <thead class=" text-black">
+                            <thead class="text-center text-black">
                                 <th>Empcode</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
+                                <th>Reset Password</th>
+                                <th>Team members</th>
                                 <th>ExpenseManager</th>
+                                <th>Attendence</th>
+                                <th class="text-center">LMS</th>
                                 <th colspan="2" class="text-center mr-5">Action</th>
                             </thead>
-                            <tbody>
+                            <tbody class="text-center">
                                 <tr   *ngFor="let data of items; let i = index;">
                                     <td>{{data.employee_code}}</td>
                                     <td>{{data.name}}</td>
                                     <td>{{data.email}}</td>
                                     <td>{{data.role}}</td>
+                                    <td class=" ">
+                                      <button mat-raised-button type="submit"  class="btn btn-primary pull-right" (click)="resetuser(data._id)">Reset</button>
+                                    </td>
+                                    <td *ngIf="data.role != 'senior_sales_manager' ">          
+                                      <button  mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/team-members/', data._id]" class="btn btn-Success ">view</button>
+                                    </td>
+                                    <td *ngIf="data.role == 'senior_sales_manager' "></td>
                                     <td>{{data.is_expense_manager_user}}</td>
+                                    <td class=" ">
+                                      <button mat-raised-button type="submit"  class="btn btn-primary pull-right" [routerLink]="['/attendence/', data._id]">View</button>
+                                    </td>
+                                    <!-- <td class=" ">
+                                      <button mat-raised-button type="submit"  class="btn btn-primary pull-right" (click)="viewatt(data._id)">View</button>
+                                    </td> -->
+                                    <td>
+                                      <button mat-raised-button color="primary" type="submit"  class="btn " [routerLink]="['/dsr/', data._id]">View</button></td>
                                     <td class=" ">
                                       <button  mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/edit-profile/', data._id, i]" class="btn btn-Success ">Edit</button>
                                       <button mat-raised-button type="submit"  class="btn btn-danger pull-right" (click)="deluser(data._id)">Delete</button>
                                     </td>
-                                    <!-- <td><button mat-raised-button type="submit"  class="btn btn-danger pull-right" (click)="deluser(data._id)">Delete</button></td> -->
+                                    
                                    
                                   </tr>
                             </tbody>

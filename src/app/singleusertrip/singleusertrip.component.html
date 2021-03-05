@@ -1,7 +1,20 @@
 <div class="main-content">
     <div class="container-fluid">
-        <i class="row mb-5 ml-2 fa fa-arrow-left" (click)="goBack()" aria-hidden="true"></i>
-      <div *ngIf="this.count == false; else elseBlock"></div>
+        <i class="row mb-3 ml-2 fa fa-arrow-left" (click)="goBack()" aria-hidden="true"></i>
+    
+        <div class="row py-3">
+            <div class="col-md-5">
+                <mat-card  *ngFor="let data of showuser" >
+                   <h3 class="text-center pb-3"><b>User's Info</b></h3>
+                   <h4  class="py-2">Employee code : {{data.employee_code}}</h4>
+                   <h4  class="py-2">Name : {{data.name}}</h4>
+                   <h4  class="py-2">Email : {{data.email}}</h4>
+                   <h4 class="py-2">Role : {{data.role}}</h4>
+                </mat-card>
+            </div> 
+        </div>      
+
+        <div *ngIf="this.count == false; else elseBlock"></div>
             <ng-template #elseBlock>
                 <button [routerLink]="['/usertrip/start-trip/', this.user_id]" mat-raised-button color="primary">START TRIP</button>
             </ng-template>
@@ -24,14 +37,15 @@
                         <th>Starting Bal.</th>
                         <th>Current Bal.</th>
                         <th>Reimbursement Bal.</th>
-                        <th>Generate Sheet</th>
+                        <th>Sheet</th>
                         <th>Status</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
                         <tr  *ngFor="let data of items">
                             <td>{{data.started_at | date:'dd/MM/yyyy'}}</td>
-                            <td>{{data.ended_at | date:'dd/MM/yyyy'}}</td> 
+                            <td *ngIf="data.ongoing != true">{{data.ended_at | date:'dd/MM/yyyy'}}</td>
+                            <td *ngIf="data.ongoing == true"></td> 
                             <td>
                                 <li style="list-style: none;" *ngFor="let s_bal of data.starting_balance">{{s_bal.holding.amount}} {{s_bal.holding.currency}}</li>
                             </td>
@@ -41,9 +55,14 @@
                             <td>
                                   <li style="list-style: none;" *ngFor="let r_bal of data.reimbursement_balance">{{r_bal.amount}} {{r_bal.currency}}</li>
                             </td> 
-                            <td *ngIf="data.expense_sheet_url == ''"></td>
+                            <td *ngIf="data.expense_sheet_url == '' && data.last_generated_expense_sheet_url == ''">
+                                <a mat-raised-button  color="accent"  (click)="Generate_sheet(data._id)" >Generate</a>
+                            </td>
+                            <td *ngIf="data.last_generated_expense_sheet_url && !(data.expense_sheet_url)">
+                                <a mat-raised-button  color="warn"  href="{{data.last_generated_expense_sheet_url}}" >Download</a>
+                            </td>
                             <td *ngIf="data.expense_sheet_url">
-                                <a mat-raised-button color="warn" href="{{data.expense_sheet_url}}">Generate</a>
+                                <a mat-raised-button color="warn"  href="{{data.expense_sheet_url}}">Download</a>
                             </td>
                             <td style="color:green;font-weight: 600;" *ngIf="data.ongoing == true">Active</td>
                             <td style="color:blue;font-weight: 600;" *ngIf="data.ongoing == false">Completed</td>
@@ -59,3 +78,4 @@
   </div>
 </div>
 </div>
+

@@ -19,8 +19,8 @@
                         itemsPerPage: 10,
                         currentPage: logsPage,
                         totalItems: TotalRecords }; let i = index">
-                            <td *ngIf="data.log_action == 'create'">{{data.message}}</td>
-                            <td *ngIf="data.log_action == 'update'" style="font-weight: 400;background-color: rgb(255,235,238,1);">{{data.message}}</td>
+                            <td *ngIf="data.log_action == ''">{{data.message}}</td>
+                            <td *ngIf="(data.log_action == 'update')||(data.log_action == 'create')" style="font-weight: 400;background-color: rgb(255,235,238,1);">{{data.message}}</td>
                         </tr>
                     </tbody>
                 </table>

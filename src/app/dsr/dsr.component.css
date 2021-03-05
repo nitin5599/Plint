@@ -1,0 +1,15 @@
+.card-header{
+    background-color:#FFF  ;
+}
+.card-title{
+    color: black;
+    font-size: 25px;
+    font-weight: 500;
+}
+.card-header .card-category {
+    color: white;
+}
+
+.example-card {
+    max-width: 450px;
+} 

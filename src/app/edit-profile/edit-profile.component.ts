@@ -25,12 +25,12 @@ export class EditProfileComponent implements OnInit {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  role: any[] = ['admin', 'senior_sales_manager', 'regional_manager'];
+  role: any[] = ['admin', 'senior_sales_manager', 'regional_manager', 'associate_vice_president'];
   
   is_expense_manager_user: boolean;
   
   editform: FormGroup;
- 
+  parent_user_id: Array<any>;
   items: [];
   emp_id: String;
   user_id: String;
@@ -40,6 +40,10 @@ export class EditProfileComponent implements OnInit {
   pos: any;
 
   datalist: [];
+
+  value;
+  display: string = '';
+  man_name: string;
   
   constructor(public userservice: UsercrudService,private toastr: ToastrService, private location: Location, private http: HttpClient, public router: Router, private actRoute: ActivatedRoute, public fb: FormBuilder) 
   {
@@ -50,6 +54,7 @@ export class EditProfileComponent implements OnInit {
       ])],
       name: ['', Validators.required],
       role: ['', Validators.required],
+      parent_user_id: ['', Validators.required],
       is_expense_manager_user: [ Validators.required],
       employee_code: ['', Validators.required],
   });
@@ -61,16 +66,26 @@ export class EditProfileComponent implements OnInit {
   
 
   ngOnInit(): void {
+    
+    this.http.get<any>('https://api.plint.in/admin/managers').subscribe(res => {
+      this.parent_user_id = res.data;
+      // console.log(this.parent_user_id)
+    });  
+
     this.http.get<any>('https://api.plint.in/admin/users?nonAdminUsers=false').subscribe(res => {
       this.items = res.data;
+      console.log(this.items);
       for (var index in res.data) 
       {
         if(this.user_id == res.data[index]._id)
         {
+          this.manager_name(res.data[index].parent_user_id);
+          
           this.editform = new FormGroup({
             employee_code: new FormControl(res.data[index].employee_code),
             name: new FormControl(res.data[index].name),
             role: new FormControl(res.data[index].role),
+            parent_user_id: new FormControl(this.man_name),
             email: new FormControl(res.data[index].email),
             is_expense_manager_user: new FormControl(res.data[index].is_expense_manager_user)
           })
@@ -80,6 +95,30 @@ export class EditProfileComponent implements OnInit {
     });  
  
   }
+
+  manager_name(value)
+  {
+    this.http.get<any>('https://api.plint.in/admin/managers').subscribe(res => {
+      this.parent_user_id = res.data;
+      if(this.parent_user_id == value)
+      {
+        this.man_name = res.data.name;
+      }
+    });  
+  }
+
+onEnter(val: string) 
+{
+  this.value = val; 
+  if((this.value == 'admin')||(this.value == 'associate_vice_president'))
+  {
+  this.display = 'false';
+  }
+  else
+  {
+  this.display = 'true';
+  }
+}
 
   goBack() {
     this.location.back();
@@ -102,7 +141,7 @@ onUpdate()
     data => {
       if(data.message == 'Done') {
         this.showupdate();
-        this.router.navigate(['user-profile']);
+        this.router.navigate(['userslist']);
       }
       else
       { 

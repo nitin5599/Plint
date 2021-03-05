@@ -1,0 +1,57 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+      <app-back></app-back>
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <a mat-raised-button  color="warn"  href="{{this.export_item}}" >Export</a>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div  class="card-header rounded mdc-elevation--z6 card-header">
+                    <h4 class="card-title ">All Companies</h4>
+                    <p class="card-category ">About company info</p>
+                </div>
+                <div class="card-body rounded mdc-elevation--z6">
+                    <div  class="table-responsive">
+                        <table class="table">
+                            <thead class="text-center text-black">
+                                <th>Company Name</th>
+                                <th colspan="4" class=" text-center">Person met</th>
+                                <th colspan="2" class=" text-left">Location</th>
+                                <th class="">Address</th>
+                                <th class="text-center">Action</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Type</th>
+                                    <th>Area</th>
+                                </tr>
+                                <tr *ngFor="let data of items; let i = index;">
+                                    <td>{{data.company_name}}</td>
+                                    <td>{{data.default_person_met.name}}</td>
+                                    <td>{{data.default_person_met.designation}}</td>    
+                                    <td>{{data.default_person_met.email}}</td>
+                                    <td>{{data.default_person_met.mobile}}</td>
+                                    <td>{{data.location.type}}</td>
+                                    <td>{{data.location.area}}</td>
+                                    <td>{{data.company_address}}</td>
+                                    <button  mat-raised-button type="submit" style="background-color: #1b96f3;" [routerLink]="['/edit-company/', data._id, i]" class="btn btn-Success ">Edit</button>
+                                    <button mat-raised-button type="submit"  class="btn btn-danger pull-right" (click)="deluser(data._id)">Delete</button>
+                                </tr>
+                            </tbody>
+                        </table>
+            </div>
+          </div>
+  
+    
+    </div>
+  </div>
+  

@@ -26,9 +26,10 @@ export class TransLogComponent implements OnInit {
   ngOnInit(): void {
     this.getData();
   }
-
+  // ?numDays=3&skip=0&limit=10
   getData(){
-    this.http.get<any>('https://api.plint.in/admin/logs?numDays=3&skip=0&limit=10').subscribe(res => {
+    this.http.get<any>('https://api.plint.in/admin/logs').subscribe(res => {
+      console.log(res);
       this.items = res.data;
       this.TotalRecords = res.length;
     });  
