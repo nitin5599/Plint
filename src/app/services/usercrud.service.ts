@@ -112,17 +112,10 @@ export class UsercrudService {
 
   }
 
-  updateCompany(cmp: any[], user_id: String): Observable<any>
-  {   
-    const headers: HttpHeaders = new HttpHeaders()
-    .append('Authorization', 'Bearer ' + window.sessionStorage.getItem('access_token'));
-    
-    const httpOptions = {
-      headers: headers  
-    };
-    
+  updateCompany(cmp, user_id: String): Observable<any>
+  {    
     let API_URL = `${this.Url}/dsr/companies`;
-    return this.http.put<any>(`${API_URL}/${user_id}`, cmp, httpOptions)
+    return this.http.put<any>(`${API_URL}/${user_id}`, cmp, {headers: this.headers})
   }
 
 }

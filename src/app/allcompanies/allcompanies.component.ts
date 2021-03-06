@@ -35,7 +35,7 @@ export class AllcompaniesComponent implements OnInit {
     let API_URL = `${this.Url}/dsr/companies/export`;
     this.http.get<any>(`${API_URL}`).subscribe(res => {
       this.export_item = res.data.url;
-      console.log(this.export_item); 
+      // console.log(this.export_item); 
     });
   }
 
@@ -44,7 +44,7 @@ export class AllcompaniesComponent implements OnInit {
     this.http.get<any>(`${API_URL}`)
      .subscribe(res => {
       this.items = res.data;
-      console.log(res);
+      // console.log(res);
     });
   }
 
@@ -58,7 +58,7 @@ export class AllcompaniesComponent implements OnInit {
         
         this.http.delete(`${API_URL}`, {headers : this.headers})
           .subscribe((val) => {
-            console.log(val);
+            // console.log(val);
             this.showDelete();
             this.getCompanyData();
           });
